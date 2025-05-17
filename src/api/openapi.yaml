@@ -1,0 +1,2754 @@
+
+openapi: 3.0.0
+info:
+  title: Threadwise API
+  description: API for the Threadwise SaaS platform, which monitors unanswered forum questions and provides analytics
+  version: 1.0.0
+  contact:
+    name: Threadwise Support
+    url: https://threadwise.com/support
+    email: support@threadwise.com
+
+servers:
+  - url: https://forum-scrapper.onrender.com/api
+    description: Production API server
+
+tags:
+  - name: Authentication
+    description: User authentication endpoints
+  - name: Users
+    description: User management endpoints
+  - name: Teams
+    description: Team management endpoints
+  - name: Integrations
+    description: External service integration endpoints
+  - name: Notifications
+    description: Alert and notification settings
+  - name: Forums
+    description: Forum monitoring configuration
+  - name: Analytics
+    description: Usage and performance analytics
+  - name: Support
+    description: Support ticket management
+  - name: Admin
+    description: Administrative operations
+
+paths:
+  # Authentication Endpoints
+  /auth/register:
+    post:
+      tags:
+        - Authentication
+      summary: Register a new user
+      description: Create a new user account with email and password
+      operationId: registerUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegistration'
+      responses:
+        '201':
+          description: User successfully registered
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserResponse'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '409':
+          description: User already exists
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /auth/login:
+    post:
+      tags:
+        - Authentication
+      summary: Login with email and password
+      description: Authenticate a user with email and password credentials
+      operationId: loginUser
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLogin'
+      responses:
+        '200':
+          description: Successful login
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '401':
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /auth/login/social/{provider}:
+    post:
+      tags:
+        - Authentication
+      summary: Login with social provider
+      description: Authenticate using a social login provider (Google, GitHub)
+      operationId: socialLogin
+      parameters:
+        - name: provider
+          in: path
+          description: The social provider to use (google, github)
+          required: true
+          schema:
+            type: string
+            enum: [google, github]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SocialAuthRequest'
+      responses:
+        '200':
+          description: Successful login
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '401':
+          description: Authentication failed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /auth/logout:
+    post:
+      tags:
+        - Authentication
+      summary: Logout user
+      description: End the current user session
+      operationId: logoutUser
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful logout
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Logout successful
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /auth/refresh-token:
+    post:
+      tags:
+        - Authentication
+      summary: Refresh authentication token
+      description: Get a new access token using a refresh token
+      operationId: refreshToken
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                refreshToken:
+                  type: string
+              required:
+                - refreshToken
+      responses:
+        '200':
+          description: Token refreshed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthResponse'
+        '401':
+          description: Invalid or expired refresh token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  # User Endpoints
+  /users/me:
+    get:
+      tags:
+        - Users
+      summary: Get current user profile
+      description: Retrieve the profile of the authenticated user
+      operationId: getCurrentUser
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: User profile retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+    patch:
+      tags:
+        - Users
+      summary: Update current user profile
+      description: Update the profile information of the authenticated user
+      operationId: updateCurrentUser
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserProfileUpdate'
+      responses:
+        '200':
+          description: User profile updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  
+  /users/password:
+    post:
+      tags:
+        - Users
+      summary: Change password
+      description: Change the password for the current user
+      operationId: changePassword
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                currentPassword:
+                  type: string
+                newPassword:
+                  type: string
+                  format: password
+              required:
+                - currentPassword
+                - newPassword
+      responses:
+        '200':
+          description: Password changed successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Password updated successfully
+        '401':
+          description: Current password is incorrect
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  # Team Management Endpoints
+  /teams:
+    get:
+      tags:
+        - Teams
+      summary: List user teams
+      description: Retrieve all teams that the current user belongs to
+      operationId: listUserTeams
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Teams retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  teams:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Team'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+    post:
+      tags:
+        - Teams
+      summary: Create a new team
+      description: Create a new team with the current user as owner
+      operationId: createTeam
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TeamCreate'
+      responses:
+        '201':
+          description: Team created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /teams/{teamId}:
+    get:
+      tags:
+        - Teams
+      summary: Get team details
+      description: Retrieve detailed information about a team
+      operationId: getTeam
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: teamId
+          in: path
+          description: ID of the team to retrieve
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Team details retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    patch:
+      tags:
+        - Teams
+      summary: Update team details
+      description: Update information about a team
+      operationId: updateTeam
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: teamId
+          in: path
+          description: ID of the team to update
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TeamUpdate'
+      responses:
+        '200':
+          description: Team updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Team'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    delete:
+      tags:
+        - Teams
+      summary: Delete a team
+      description: Delete a team and all its associated data
+      operationId: deleteTeam
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: teamId
+          in: path
+          description: ID of the team to delete
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Team deleted successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /teams/{teamId}/members:
+    get:
+      tags:
+        - Teams
+      summary: List team members
+      description: Retrieve all members of a team
+      operationId: listTeamMembers
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: teamId
+          in: path
+          description: ID of the team
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Team members retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  members:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TeamMember'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    post:
+      tags:
+        - Teams
+      summary: Invite a member to the team
+      description: Send an invitation to join the team
+      operationId: inviteTeamMember
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: teamId
+          in: path
+          description: ID of the team
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TeamMemberInvite'
+      responses:
+        '200':
+          description: Invitation sent successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                    example: Invitation sent successfully
+                  invitationId:
+                    type: string
+                    format: uuid
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  
+  /teams/{teamId}/members/{userId}:
+    patch:
+      tags:
+        - Teams
+      summary: Update team member role
+      description: Change the role of a team member
+      operationId: updateTeamMemberRole
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: teamId
+          in: path
+          description: ID of the team
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: userId
+          in: path
+          description: ID of the team member
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                role:
+                  type: string
+                  enum: [admin, member, viewer]
+              required:
+                - role
+      responses:
+        '200':
+          description: Member role updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamMember'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    delete:
+      tags:
+        - Teams
+      summary: Remove a member from the team
+      description: Remove a user from the team
+      operationId: removeTeamMember
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: teamId
+          in: path
+          description: ID of the team
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - name: userId
+          in: path
+          description: ID of the team member to remove
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Member removed successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  # Integration Endpoints
+  /integrations:
+    get:
+      tags:
+        - Integrations
+      summary: List configured integrations
+      description: Retrieve all integrations configured for the current user
+      operationId: listIntegrations
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: teamId
+          in: query
+          description: Filter by team ID
+          required: false
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Integrations retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  integrations:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Integration'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /integrations/{type}:
+    post:
+      tags:
+        - Integrations
+      summary: Configure a new integration
+      description: Set up a new integration with an external service
+      operationId: configureIntegration
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: type
+          in: path
+          description: Type of integration (slack, teams, email)
+          required: true
+          schema:
+            type: string
+            enum: [slack, teams, email]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/SlackIntegration'
+                - $ref: '#/components/schemas/TeamsIntegration'
+                - $ref: '#/components/schemas/EmailIntegration'
+      responses:
+        '201':
+          description: Integration configured successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /integrations/{type}/{integrationId}:
+    patch:
+      tags:
+        - Integrations
+      summary: Update an integration
+      description: Update the configuration of an existing integration
+      operationId: updateIntegration
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: type
+          in: path
+          description: Type of integration (slack, teams, email)
+          required: true
+          schema:
+            type: string
+            enum: [slack, teams, email]
+        - name: integrationId
+          in: path
+          description: ID of the integration to update
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/SlackIntegration'
+                - $ref: '#/components/schemas/TeamsIntegration'
+                - $ref: '#/components/schemas/EmailIntegration'
+      responses:
+        '200':
+          description: Integration updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Integration'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    delete:
+      tags:
+        - Integrations
+      summary: Remove an integration
+      description: Delete an existing integration configuration
+      operationId: removeIntegration
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: type
+          in: path
+          description: Type of integration (slack, teams, email)
+          required: true
+          schema:
+            type: string
+            enum: [slack, teams, email]
+        - name: integrationId
+          in: path
+          description: ID of the integration to remove
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Integration removed successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  # Notifications Endpoints
+  /notifications/settings:
+    get:
+      tags:
+        - Notifications
+      summary: Get notification settings
+      description: Retrieve the notification settings for the current user
+      operationId: getNotificationSettings
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: teamId
+          in: query
+          description: Filter by team ID
+          required: false
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Notification settings retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationSettings'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+    put:
+      tags:
+        - Notifications
+      summary: Update notification settings
+      description: Update the notification settings for the current user
+      operationId: updateNotificationSettings
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationSettingsUpdate'
+      responses:
+        '200':
+          description: Notification settings updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotificationSettings'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /notifications:
+    get:
+      tags:
+        - Notifications
+      summary: List notifications
+      description: Retrieve recent notifications for the current user
+      operationId: listNotifications
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          description: Page number for pagination
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          description: Number of items per page
+          required: false
+          schema:
+            type: integer
+            default: 20
+            maximum: 100
+        - name: status
+          in: query
+          description: Filter by notification status
+          required: false
+          schema:
+            type: string
+            enum: [read, unread, all]
+            default: all
+      responses:
+        '200':
+          description: Notifications retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  notifications:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Notification'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /notifications/{notificationId}/read:
+    post:
+      tags:
+        - Notifications
+      summary: Mark notification as read
+      description: Mark a specific notification as read
+      operationId: markNotificationRead
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: notificationId
+          in: path
+          description: ID of the notification to mark as read
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Notification marked as read
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Notification'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  # Forum Configuration Endpoints
+  /forums:
+    get:
+      tags:
+        - Forums
+      summary: List monitored forums
+      description: Retrieve all forums being monitored
+      operationId: listForums
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: teamId
+          in: query
+          description: Filter by team ID
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - name: status
+          in: query
+          description: Filter by forum monitoring status
+          required: false
+          schema:
+            type: string
+            enum: [active, paused, all]
+            default: all
+      responses:
+        '200':
+          description: Forums retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  forums:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Forum'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+    post:
+      tags:
+        - Forums
+      summary: Add a new forum to monitor
+      description: Configure a new forum for monitoring
+      operationId: addForum
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ForumCreate'
+      responses:
+        '201':
+          description: Forum added successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forum'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /forums/{forumId}:
+    get:
+      tags:
+        - Forums
+      summary: Get forum details
+      description: Retrieve detailed information about a monitored forum
+      operationId: getForumDetails
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: forumId
+          in: path
+          description: ID of the forum
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Forum details retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forum'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    patch:
+      tags:
+        - Forums
+      summary: Update forum configuration
+      description: Update the configuration of a monitored forum
+      operationId: updateForum
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: forumId
+          in: path
+          description: ID of the forum
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ForumUpdate'
+      responses:
+        '200':
+          description: Forum updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forum'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    delete:
+      tags:
+        - Forums
+      summary: Remove a forum from monitoring
+      description: Stop monitoring a forum and delete its configuration
+      operationId: removeForum
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: forumId
+          in: path
+          description: ID of the forum to remove
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '204':
+          description: Forum removed successfully
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /forums/{forumId}/pause:
+    post:
+      tags:
+        - Forums
+      summary: Pause forum monitoring
+      description: Temporarily stop monitoring a forum
+      operationId: pauseForumMonitoring
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: forumId
+          in: path
+          description: ID of the forum
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Forum monitoring paused successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forum'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /forums/{forumId}/resume:
+    post:
+      tags:
+        - Forums
+      summary: Resume forum monitoring
+      description: Resume monitoring a paused forum
+      operationId: resumeForumMonitoring
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: forumId
+          in: path
+          description: ID of the forum
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Forum monitoring resumed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Forum'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  # Analytics Endpoints
+  /analytics/dashboard:
+    get:
+      tags:
+        - Analytics
+      summary: Get dashboard analytics
+      description: Retrieve overview metrics for the dashboard
+      operationId: getDashboardAnalytics
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: teamId
+          in: query
+          description: Filter by team ID
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - name: period
+          in: query
+          description: Time period for the analytics
+          required: false
+          schema:
+            type: string
+            enum: [day, week, month, year]
+            default: week
+      responses:
+        '200':
+          description: Dashboard analytics retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DashboardAnalytics'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /analytics/forums:
+    get:
+      tags:
+        - Analytics
+      summary: Get forum analytics
+      description: Retrieve analytics about monitored forums
+      operationId: getForumAnalytics
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: teamId
+          in: query
+          description: Filter by team ID
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - name: forumId
+          in: query
+          description: Filter by forum ID
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - name: period
+          in: query
+          description: Time period for the analytics
+          required: false
+          schema:
+            type: string
+            enum: [day, week, month, year]
+            default: week
+      responses:
+        '200':
+          description: Forum analytics retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ForumAnalytics'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /analytics/users:
+    get:
+      tags:
+        - Analytics
+      summary: Get user engagement analytics
+      description: Retrieve analytics about user engagement
+      operationId: getUserAnalytics
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: teamId
+          in: query
+          description: Filter by team ID
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - name: period
+          in: query
+          description: Time period for the analytics
+          required: false
+          schema:
+            type: string
+            enum: [day, week, month, year]
+            default: week
+      responses:
+        '200':
+          description: User analytics retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserAnalytics'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /analytics/reports:
+    get:
+      tags:
+        - Analytics
+      summary: Generate analytics report
+      description: Generate a comprehensive analytics report
+      operationId: generateAnalyticsReport
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: teamId
+          in: query
+          description: Filter by team ID
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - name: format
+          in: query
+          description: Report format
+          required: false
+          schema:
+            type: string
+            enum: [json, csv, pdf]
+            default: json
+        - name: startDate
+          in: query
+          description: Start date for the report (YYYY-MM-DD)
+          required: true
+          schema:
+            type: string
+            format: date
+        - name: endDate
+          in: query
+          description: End date for the report (YYYY-MM-DD)
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Report generated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AnalyticsReport'
+            text/csv:
+              schema:
+                type: string
+            application/pdf:
+              schema:
+                type: string
+                format: binary
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  # Support Endpoints
+  /support/tickets:
+    get:
+      tags:
+        - Support
+      summary: List support tickets
+      description: Retrieve support tickets for the current user
+      operationId: listSupportTickets
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: status
+          in: query
+          description: Filter by ticket status
+          required: false
+          schema:
+            type: string
+            enum: [open, closed, all]
+            default: all
+        - name: page
+          in: query
+          description: Page number for pagination
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          description: Number of items per page
+          required: false
+          schema:
+            type: integer
+            default: 20
+            maximum: 100
+      responses:
+        '200':
+          description: Support tickets retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  tickets:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/SupportTicket'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+    post:
+      tags:
+        - Support
+      summary: Create a support ticket
+      description: Submit a new support ticket
+      operationId: createSupportTicket
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SupportTicketCreate'
+      responses:
+        '201':
+          description: Support ticket created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupportTicket'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+
+  /support/tickets/{ticketId}:
+    get:
+      tags:
+        - Support
+      summary: Get support ticket details
+      description: Retrieve detailed information about a support ticket
+      operationId: getSupportTicket
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: ticketId
+          in: path
+          description: ID of the support ticket
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Support ticket retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupportTicket'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /support/tickets/{ticketId}/messages:
+    get:
+      tags:
+        - Support
+      summary: Get support ticket messages
+      description: Retrieve messages for a support ticket
+      operationId: getSupportTicketMessages
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: ticketId
+          in: path
+          description: ID of the support ticket
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Support ticket messages retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  messages:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/TicketMessage'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    post:
+      tags:
+        - Support
+      summary: Add message to support ticket
+      description: Add a new message to a support ticket
+      operationId: addTicketMessage
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: ticketId
+          in: path
+          description: ID of the support ticket
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                message:
+                  type: string
+                  description: Content of the message
+                attachments:
+                  type: array
+                  items:
+                    type: string
+                    format: binary
+              required:
+                - message
+      responses:
+        '201':
+          description: Message added successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TicketMessage'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /support/tickets/{ticketId}/close:
+    post:
+      tags:
+        - Support
+      summary: Close support ticket
+      description: Mark a support ticket as closed
+      operationId: closeSupportTicket
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: ticketId
+          in: path
+          description: ID of the support ticket
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Support ticket closed successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SupportTicket'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  # Admin Endpoints
+  /admin/users:
+    get:
+      tags:
+        - Admin
+      summary: List all users
+      description: Retrieve all users (admin only)
+      operationId: listAllUsers
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          description: Page number for pagination
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          description: Number of items per page
+          required: false
+          schema:
+            type: integer
+            default: 20
+            maximum: 100
+        - name: status
+          in: query
+          description: Filter by user status
+          required: false
+          schema:
+            type: string
+            enum: [active, inactive, all]
+            default: all
+      responses:
+        '200':
+          description: Users retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  users:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/UserProfile'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  /admin/users/{userId}:
+    get:
+      tags:
+        - Admin
+      summary: Get user details
+      description: Retrieve detailed information about a user (admin only)
+      operationId: getUser
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: userId
+          in: path
+          description: ID of the user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: User details retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+    patch:
+      tags:
+        - Admin
+      summary: Update user
+      description: Update a user's information (admin only)
+      operationId: updateUser
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: userId
+          in: path
+          description: ID of the user
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserAdminUpdate'
+      responses:
+        '200':
+          description: User updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+        '400':
+          description: Invalid input
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+        '404':
+          $ref: '#/components/responses/NotFound'
+
+  /admin/teams:
+    get:
+      tags:
+        - Admin
+      summary: List all teams
+      description: Retrieve all teams (admin only)
+      operationId: listAllTeams
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          description: Page number for pagination
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          description: Number of items per page
+          required: false
+          schema:
+            type: integer
+            default: 20
+            maximum: 100
+      responses:
+        '200':
+          description: Teams retrieved successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  teams:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Team'
+                  pagination:
+                    $ref: '#/components/schemas/Pagination'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+  /admin/usage:
+    get:
+      tags:
+        - Admin
+      summary: Get platform usage statistics
+      description: Retrieve usage statistics for the platform (admin only)
+      operationId: getUsageStatistics
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: period
+          in: query
+          description: Time period for the statistics
+          required: false
+          schema:
+            type: string
+            enum: [day, week, month, year, all]
+            default: month
+      responses:
+        '200':
+          description: Usage statistics retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsageStatistics'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '403':
+          $ref: '#/components/responses/Forbidden'
+
+components:
+  schemas:
+    UserRegistration:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+          minLength: 8
+        firstName:
+          type: string
+        lastName:
+          type: string
+      required:
+        - email
+        - password
+        - firstName
+        - lastName
+
+    UserLogin:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password
+      required:
+        - email
+        - password
+
+    SocialAuthRequest:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          description: Access token from the social provider
+      required:
+        - accessToken
+
+    AuthResponse:
+      type: object
+      properties:
+        accessToken:
+          type: string
+        refreshToken:
+          type: string
+        expiresIn:
+          type: integer
+          description: Token expiry time in seconds
+        user:
+          $ref: '#/components/schemas/UserResponse'
+      required:
+        - accessToken
+        - refreshToken
+        - expiresIn
+        - user
+
+    UserResponse:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+        firstName:
+          type: string
+        lastName:
+          type: string
+        role:
+          type: string
+          enum: [user, admin]
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - email
+        - firstName
+        - lastName
+        - role
+        - createdAt
+
+    UserProfile:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+        firstName:
+          type: string
+        lastName:
+          type: string
+        role:
+          type: string
+          enum: [user, admin]
+        phone:
+          type: string
+        company:
+          type: string
+        jobTitle:
+          type: string
+        profileImageUrl:
+          type: string
+          format: uri
+        timezone:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        lastLoginAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - email
+        - firstName
+        - lastName
+        - role
+        - createdAt
+        - updatedAt
+
+    UserProfileUpdate:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        phone:
+          type: string
+        company:
+          type: string
+        jobTitle:
+          type: string
+        profileImageUrl:
+          type: string
+          format: uri
+        timezone:
+          type: string
+
+    UserAdminUpdate:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        email:
+          type: string
+          format: email
+        role:
+          type: string
+          enum: [user, admin]
+        status:
+          type: string
+          enum: [active, inactive]
+        phone:
+          type: string
+        company:
+          type: string
+        jobTitle:
+          type: string
+
+    Team:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        name:
+          type: string
+        description:
+          type: string
+        logoUrl:
+          type: string
+          format: uri
+        ownerId:
+          type: string
+          format: uuid
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        membersCount:
+          type: integer
+        forumsCount:
+          type: integer
+      required:
+        - id
+        - name
+        - ownerId
+        - createdAt
+        - updatedAt
+
+    TeamCreate:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        logoUrl:
+          type: string
+          format: uri
+      required:
+        - name
+
+    TeamUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        description:
+          type: string
+        logoUrl:
+          type: string
+          format: uri
+
+    TeamMember:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        teamId:
+          type: string
+          format: uuid
+        userId:
+          type: string
+          format: uuid
+        email:
+          type: string
+          format: email
+        firstName:
+          type: string
+        lastName:
+          type: string
+        role:
+          type: string
+          enum: [admin, member, viewer]
+        joinedAt:
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum: [active, invited, removed]
+      required:
+        - id
+        - teamId
+        - userId
+        - email
+        - firstName
+        - lastName
+        - role
+        - joinedAt
+        - status
+
+    TeamMemberInvite:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        role:
+          type: string
+          enum: [admin, member, viewer]
+      required:
+        - email
+        - role
+
+    Integration:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        type:
+          type: string
+          enum: [slack, teams, email]
+        name:
+          type: string
+        teamId:
+          type: string
+          format: uuid
+        config:
+          type: object
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        status:
+          type: string
+          enum: [active, inactive]
+      required:
+        - id
+        - type
+        - name
+        - teamId
+        - config
+        - createdAt
+        - updatedAt
+        - status
+
+    SlackIntegration:
+      type: object
+      properties:
+        name:
+          type: string
+        teamId:
+          type: string
+          format: uuid
+        config:
+          type: object
+          properties:
+            webhookUrl:
+              type: string
+              format: uri
+            channel:
+              type: string
+          required:
+            - webhookUrl
+            - channel
+      required:
+        - name
+        - teamId
+        - config
+
+    TeamsIntegration:
+      type: object
+      properties:
+        name:
+          type: string
+        teamId:
+          type: string
+          format: uuid
+        config:
+          type: object
+          properties:
+            webhookUrl:
+              type: string
+              format: uri
+            channel:
+              type: string
+          required:
+            - webhookUrl
+            - channel
+      required:
+        - name
+        - teamId
+        - config
+
+    EmailIntegration:
+      type: object
+      properties:
+        name:
+          type: string
+        teamId:
+          type: string
+          format: uuid
+        config:
+          type: object
+          properties:
+            recipients:
+              type: array
+              items:
+                type: string
+                format: email
+            ccRecipients:
+              type: array
+              items:
+                type: string
+                format: email
+            bccRecipients:
+              type: array
+              items:
+                type: string
+                format: email
+          required:
+            - recipients
+      required:
+        - name
+        - teamId
+        - config
+
+    NotificationSettings:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        userId:
+          type: string
+          format: uuid
+        teamId:
+          type: string
+          format: uuid
+        email:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+            digest:
+              type: string
+              enum: [immediate, daily, weekly]
+        slack:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+        teams:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+        inApp:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+        updatedAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - userId
+        - email
+        - slack
+        - teams
+        - inApp
+        - updatedAt
+
+    NotificationSettingsUpdate:
+      type: object
+      properties:
+        teamId:
+          type: string
+          format: uuid
+        email:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+            digest:
+              type: string
+              enum: [immediate, daily, weekly]
+        slack:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+        teams:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+        inApp:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+
+    Notification:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        userId:
+          type: string
+          format: uuid
+        teamId:
+          type: string
+          format: uuid
+        type:
+          type: string
+          enum: [forum_question, team_invitation, forum_status, system]
+        title:
+          type: string
+        message:
+          type: string
+        data:
+          type: object
+        read:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - userId
+        - type
+        - title
+        - message
+        - read
+        - createdAt
+
+    Forum:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        teamId:
+          type: string
+          format: uuid
+        name:
+          type: string
+        url:
+          type: string
+          format: uri
+        type:
+          type: string
+          enum: [discourse, stackoverflow, custom]
+        config:
+          type: object
+        status:
+          type: string
+          enum: [active, paused, error]
+        lastSyncedAt:
+          type: string
+          format: date-time
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        metrics:
+          type: object
+          properties:
+            totalQuestions:
+              type: integer
+            unansweredQuestions:
+              type: integer
+            averageResponseTime:
+              type: number
+      required:
+        - id
+        - teamId
+        - name
+        - url
+        - type
+        - config
+        - status
+        - createdAt
+        - updatedAt
+
+    ForumCreate:
+      type: object
+      properties:
+        teamId:
+          type: string
+          format: uuid
+        name:
+          type: string
+        url:
+          type: string
+          format: uri
+        type:
+          type: string
+          enum: [discourse, stackoverflow, custom]
+        config:
+          type: object
+      required:
+        - teamId
+        - name
+        - url
+        - type
+        - config
+
+    ForumUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+        url:
+          type: string
+          format: uri
+        config:
+          type: object
+
+    DashboardAnalytics:
+      type: object
+      properties:
+        totalQuestions:
+          type: integer
+        unansweredQuestions:
+          type: integer
+        averageResponseTime:
+          type: number
+        responseRate:
+          type: number
+        questionsPerForum:
+          type: array
+          items:
+            type: object
+            properties:
+              forumId:
+                type: string
+                format: uuid
+              forumName:
+                type: string
+              count:
+                type: integer
+        trendsOverTime:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                format: date
+              questionsCount:
+                type: integer
+              responsesCount:
+                type: integer
+      required:
+        - totalQuestions
+        - unansweredQuestions
+        - averageResponseTime
+        - responseRate
+
+    ForumAnalytics:
+      type: object
+      properties:
+        forumId:
+          type: string
+          format: uuid
+        forumName:
+          type: string
+        totalQuestions:
+          type: integer
+        unansweredQuestions:
+          type: integer
+        averageResponseTime:
+          type: number
+        responseRate:
+          type: number
+        topCategories:
+          type: array
+          items:
+            type: object
+            properties:
+              name:
+                type: string
+              count:
+                type: integer
+        trendsOverTime:
+          type: array
+          items:
+            type: object
+            properties:
+              date:
+                type: string
+                format: date
+              questionsCount:
+                type: integer
+              responsesCount:
+                type: integer
+      required:
+        - forumId
+        - forumName
+        - totalQuestions
+        - unansweredQuestions
+        - averageResponseTime
+        - responseRate
+
+    UserAnalytics:
+      type: object
+      properties:
+        activeUsers:
+          type: integer
+        newUsers:
+          type: integer
+        usersByRole:
+          type: object
+          properties:
+            admin:
+              type: integer
+            member:
+              type: integer
+            viewer:
+              type: integer
+        userActivity:
+          type: array
+          items:
+            type: object
+            properties:
+              userId:
+                type: string
+                format: uuid
+              userName:
+                type: string
+              questionsAnswered:
+                type: integer
+              lastActiveAt:
+                type: string
+                format: date-time
+      required:
+        - activeUsers
+        - newUsers
+        - usersByRole
+
+    AnalyticsReport:
+      type: object
+      properties:
+        startDate:
+          type: string
+          format: date
+        endDate:
+          type: string
+          format: date
+        generatedAt:
+          type: string
+          format: date-time
+        forums:
+          type: object
+          properties:
+            totalCount:
+              type: integer
+            byStatus:
+              type: object
+              properties:
+                active:
+                  type: integer
+                paused:
+                  type: integer
+                error:
+                  type: integer
+        questions:
+          type: object
+          properties:
+            totalCount:
+              type: integer
+            unansweredCount:
+              type: integer
+            responseRate:
+              type: number
+            averageResponseTime:
+              type: number
+        users:
+          type: object
+          properties:
+            totalCount:
+              type: integer
+            activeCount:
+              type: integer
+            byRole:
+              type: object
+              properties:
+                admin:
+                  type: integer
+                member:
+                  type: integer
+                viewer:
+                  type: integer
+        teamActivity:
+          type: array
+          items:
+            type: object
+            properties:
+              teamId:
+                type: string
+                format: uuid
+              teamName:
+                type: string
+              questionsCount:
+                type: integer
+              responseRate:
+                type: number
+      required:
+        - startDate
+        - endDate
+        - generatedAt
+        - forums
+        - questions
+        - users
+
+    SupportTicket:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        userId:
+          type: string
+          format: uuid
+        subject:
+          type: string
+        status:
+          type: string
+          enum: [open, closed]
+        priority:
+          type: string
+          enum: [low, medium, high]
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+        lastResponseAt:
+          type: string
+          format: date-time
+        messagesCount:
+          type: integer
+      required:
+        - id
+        - userId
+        - subject
+        - status
+        - priority
+        - createdAt
+        - updatedAt
+
+    SupportTicketCreate:
+      type: object
+      properties:
+        subject:
+          type: string
+        message:
+          type: string
+        priority:
+          type: string
+          enum: [low, medium, high]
+        attachments:
+          type: array
+          items:
+            type: string
+            format: binary
+      required:
+        - subject
+        - message
+        - priority
+
+    TicketMessage:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        ticketId:
+          type: string
+          format: uuid
+        userId:
+          type: string
+          format: uuid
+        userType:
+          type: string
+          enum: [customer, support]
+        message:
+          type: string
+        attachments:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                format: uuid
+              filename:
+                type: string
+              url:
+                type: string
+                format: uri
+              contentType:
+                type: string
+              size:
+                type: integer
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - ticketId
+        - userId
+        - userType
+        - message
+        - createdAt
+
+    UsageStatistics:
+      type: object
+      properties:
+        users:
+          type: object
+          properties:
+            total:
+              type: integer
+            active:
+              type: integer
+            byRole:
+              type: object
+              properties:
+                admin:
+                  type: integer
+                user:
+                  type: integer
+        teams:
+          type: object
+          properties:
+            total:
+              type: integer
+            active:
+              type: integer
+        forums:
+          type: object
+          properties:
+            total:
+              type: integer
+            byStatus:
+              type: object
+              properties:
+                active:
+                  type: integer
+                paused:
+                  type: integer
+                error:
+                  type: integer
+            byType:
+              type: object
+              properties:
+                discourse:
+                  type: integer
+                stackoverflow:
+                  type: integer
+                custom:
+                  type: integer
+        apiRequests:
+          type: object
+          properties:
+            total:
+              type: integer
+            byEndpoint:
+              type: object
+        storageUsed:
+          type: object
+          properties:
+            totalBytes:
+              type: integer
+            byType:
+              type: object
+              properties:
+                attachments:
+                  type: integer
+                profileImages:
+                  type: integer
+                logos:
+                  type: integer
+      required:
+        - users
+        - teams
+        - forums
+        - apiRequests
+        - storageUsed
+
+    Pagination:
+      type: object
+      properties:
+        currentPage:
+          type: integer
+        totalPages:
+          type: integer
+        totalItems:
+          type: integer
+        itemsPerPage:
+          type: integer
+      required:
+        - currentPage
+        - totalPages
+        - totalItems
+        - itemsPerPage
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+        details:
+          type: object
+      required:
+        - code
+        - message
+
+  responses:
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+            example:
+              code: authentication_failed
+              message: Authentication failed. Please login again.
+
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+            example:
+              code: insufficient_permissions
+              message: You do not have permission to access this resource.
+
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+            example:
+              code: resource_not_found
+              message: The requested resource could not be found.
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
