@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
@@ -28,38 +27,86 @@ export const LeadCaptureForm = ({ isOpen, setIsOpen, source = "general" }: LeadC
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
+  const getformEndpoint = "https://getform.io/f/bgdlyyga"; // Your Getform endpoint
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate API call to submit lead data
-    setTimeout(() => {
-      console.log("Lead captured:", { ...formData, source });
-      setIsSubmitting(false);
-      setIsSubmitted(true);
-      
-      // Reset form after successful submission
-      setTimeout(() => {
-        setIsOpen(false);
-        setIsSubmitted(false);
-        setFormData({ name: "", email: "", phone: "" });
+    const data = new FormData();
+    data.append("name", formData.name);
+    data.append("email", formData.email);
+    data.append("phone", formData.phone);
+    data.append("source", source); // Include the source
+
+    try {
+      const response = await fetch(getformEndpoint, {
+        method: "POST",
+        body: data,
+        headers: {
+          "Accept": "application/json", // Recommended by Getform for AJAX/Fetch
+        },
+      });
+
+      if (response.ok) {
+        // const result = await response.json(); // Optional: if Getform returns data you want to use
+        // console.log("Form submitted successfully to Getform:", result);
+        setIsSubmitted(true);
         
-        // Show toast notification
+        // Reset form after successful submission & show toast
+        // Keep delay for user to see success message before dialog closes
+        setTimeout(() => {
+          setIsOpen(false); 
+          setIsSubmitted(false); // Reset for next form opening
+          setFormData({ name: "", email: "", phone: "" }); // Clear form fields
+          
+          toast({
+            title: "Thank you for your interest!",
+            description: "Our team will contact you shortly.",
+          });
+        }, 2000); 
+      } else {
+        // const errorResult = await response.json(); // Optional: Getform might return error details
+        // console.error("Error submitting to Getform:", response.status, response.statusText, errorResult);
         toast({
-          title: "Thank you for your interest!",
-          description: "Our team will contact you shortly.",
+          title: "Submission Error",
+          description: "Could not submit the form. Please try again later.",
+          variant: "destructive",
         });
-      }, 2000);
-    }, 1000);
+      }
+    } catch (error) {
+      // console.error("Network or other error submitting to Getform:", error);
+      toast({
+        title: "Submission Error",
+        description: "An unexpected error occurred. Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      // Only set isSubmitting to false here if not successful, 
+      // otherwise, the success state handles UI changes.
+      // If submission was successful, isSubmitted is true, and the form content changes.
+      // If it failed, we want the user to be able to try again.
+      if (!isSubmitted) { 
+        setIsSubmitting(false);
+      }
+    }
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={setIsOpen}>
+    <Dialog open={isOpen} onOpenChange={(open) => {
+      setIsOpen(open);
+      // If dialog is closed, reset submitted state to show form next time
+      if (!open) {
+        setIsSubmitted(false); 
+        setFormData({ name: "", email: "", phone: "" }); // Clear form fields
+        setIsSubmitting(false); // Ensure submit button is active
+      }
+    }}>
       <DialogContent className="sm:max-w-[425px]">
         {!isSubmitted ? (
           <>
@@ -79,6 +126,7 @@ export const LeadCaptureForm = ({ isOpen, setIsOpen, source = "general" }: LeadC
                   value={formData.name}
                   onChange={handleChange}
                   required
+                  disabled={isSubmitting}
                 />
               </div>
               <div className="space-y-2">
@@ -91,6 +139,7 @@ export const LeadCaptureForm = ({ isOpen, setIsOpen, source = "general" }: LeadC
                   value={formData.email}
                   onChange={handleChange}
                   required
+                  disabled={isSubmitting}
                 />
               </div>
               <div className="space-y-2">
@@ -102,10 +151,16 @@ export const LeadCaptureForm = ({ isOpen, setIsOpen, source = "general" }: LeadC
                   value={formData.phone}
                   onChange={handleChange}
                   required
+                  disabled={isSubmitting}
                 />
               </div>
               <div className="pt-2 flex justify-end gap-2">
-                <Button type="button" variant="outline" onClick={() => setIsOpen(false)}>
+                <Button 
+                  type="button" 
+                  variant="outline" 
+                  onClick={() => setIsOpen(false)} 
+                  disabled={isSubmitting}
+                >
                   Cancel
                 </Button>
                 <Button 
