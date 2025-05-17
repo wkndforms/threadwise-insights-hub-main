@@ -1,11 +1,12 @@
-
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import { useLeadCapture } from "@/hooks/use-lead-capture";
+import { Link } from "react-router-dom";
 
-export const HeroSection = () => {
-  const { openLeadForm } = useLeadCapture();
-  
+interface HeroSectionProps {
+  openLeadForm: (source: string) => void;
+}
+
+export const HeroSection = ({ openLeadForm }: HeroSectionProps) => {
   return (
     <section className="relative overflow-hidden py-20 md:py-32 bg-gradient-to-b from-background to-secondary/20">
       <div className="container px-4 md:px-6 mx-auto">
@@ -32,9 +33,8 @@ export const HeroSection = () => {
               <Button 
                 size="lg" 
                 variant="outline"
-                onClick={() => openLeadForm("hero-learn-more")}
               >
-                How It Works
+                <Link to="/how-it-works">How It Works</Link>
               </Button>
             </div>
           </div>

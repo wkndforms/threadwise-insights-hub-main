@@ -11,8 +11,12 @@ import {
   Users,
   Globe
 } from "lucide-react";
+import { useLeadCapture } from "@/hooks/use-lead-capture";
+import { LeadCaptureForm } from "@/components/lead-capture/LeadCaptureForm";
 
 export default function Features() {
+  const { openLeadForm, isLeadFormOpen, setIsLeadFormOpen, leadSource } = useLeadCapture();
+
   return (
     <>
       {/* Features Hero */}
@@ -214,23 +218,29 @@ export default function Features() {
               Explore Threadwise and see how it can transform your community engagement.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
-              <Link to="/signup">
-                <Button
-                  size="lg"
-                  className="bg-gradient-to-r from-threadwise-purple to-threadwise-purple-dark hover:opacity-90"
-                >
-                  Start Free Trial
-                </Button>
-              </Link>
-              <Link to="/contact">
-                <Button size="lg" variant="outline">
-                  Contact Sales
-                </Button>
-              </Link>
+              <Button
+                size="lg"
+                className="bg-gradient-to-r from-threadwise-purple to-threadwise-purple-dark hover:opacity-90"
+                onClick={() => openLeadForm("features-cta")}
+              >
+                Start Free Trial
+              </Button>
+              <Button 
+                size="lg" 
+                variant="outline"
+                onClick={() => openLeadForm("features-contact-sales")}
+              >
+                Contact Sales
+              </Button>
             </div>
           </div>
         </div>
       </section>
+      <LeadCaptureForm
+        isOpen={isLeadFormOpen}
+        setIsOpen={setIsLeadFormOpen}
+        source={leadSource}
+      />
     </>
   );
 }

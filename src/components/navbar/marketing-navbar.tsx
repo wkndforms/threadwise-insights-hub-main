@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { ThemeToggle } from "../ui/theme-toggle";
 import { Button } from "@/components/ui/button";
@@ -11,7 +10,6 @@ const navItems = [
   { label: "Features", path: "/features" },
   { label: "How It Works", path: "/how-it-works" },
   { label: "FAQ", path: "/faq" },
-  { label: "Contact", path: "/contact" },
 ];
 
 export const MarketingNavbar = () => {
@@ -50,6 +48,17 @@ export const MarketingNavbar = () => {
                   {item.label}
                 </a>
               ))}
+              <a
+                href="#"
+                className="px-3 py-2 text-sm font-medium rounded-md hover:bg-accent hover:text-accent-foreground transition-colors"
+                onClick={(e) => {
+                  e.preventDefault();
+                  openLeadForm("navbar-contact");
+                  handleNavClick("#contact-form");
+                }}
+              >
+                Contact
+              </a>
             </div>
           </div>
 
@@ -95,6 +104,17 @@ export const MarketingNavbar = () => {
                 {item.label}
               </a>
             ))}
+            <a
+              href="#"
+              className="block px-3 py-2 rounded-md text-base font-medium hover:bg-accent hover:text-accent-foreground"
+              onClick={(e) => {
+                e.preventDefault();
+                openLeadForm("navbar-contact-mobile");
+                handleNavClick("#contact-form");
+              }}
+            >
+              Contact
+            </a>
             <div className="pt-4 pb-3 border-t border-border">
               <div className="space-y-2 px-3">
                 <Button 

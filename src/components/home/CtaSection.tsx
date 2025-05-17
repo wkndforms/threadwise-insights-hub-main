@@ -1,10 +1,10 @@
-
 import { Button } from "@/components/ui/button";
-import { useLeadCapture } from "@/hooks/use-lead-capture";
 
-export const CtaSection = () => {
-  const { openLeadForm } = useLeadCapture();
-  
+interface CtaSectionProps {
+  openLeadForm: (source: string) => void;
+}
+
+export const CtaSection = ({ openLeadForm }: CtaSectionProps) => {
   return (
     <section className="py-20 bg-gradient-to-br from-threadwise-purple/10 to-transparent">
       <div className="container px-4 md:px-6 mx-auto">

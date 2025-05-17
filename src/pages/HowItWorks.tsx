@@ -8,8 +8,12 @@ import {
   BarChart3, 
   Settings
 } from "lucide-react";
+import { useLeadCapture } from "@/hooks/use-lead-capture";
+import { LeadCaptureForm } from "@/components/lead-capture/LeadCaptureForm";
 
 export default function HowItWorks() {
+  const { openLeadForm, isLeadFormOpen, setIsLeadFormOpen, leadSource } = useLeadCapture();
+
   return (
     <>
       {/* How It Works Hero */}
@@ -176,24 +180,30 @@ export default function HowItWorks() {
               Start using Threadwise today and see how easy it is to stay on top of your forum activity.
             </p>
             <div className="flex flex-col sm:flex-row gap-3">
-              <Link to="/signup">
-                <Button
-                  size="lg"
-                  className="bg-gradient-to-r from-threadwise-purple to-threadwise-purple-dark hover:opacity-90"
-                >
-                  Get Started
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Button>
-              </Link>
-              <Link to="/contact">
-                <Button size="lg" variant="outline">
-                  Contact Sales
-                </Button>
-              </Link>
+              <Button
+                size="lg"
+                className="bg-gradient-to-r from-threadwise-purple to-threadwise-purple-dark hover:opacity-90"
+                onClick={() => openLeadForm("how-it-works-cta")}
+              >
+                Get Started
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+              <Button 
+                size="lg" 
+                variant="outline"
+                onClick={() => openLeadForm("how-it-works-contact-sales")}
+              >
+                Contact Sales
+              </Button>
             </div>
           </div>
         </div>
       </section>
+      <LeadCaptureForm
+        isOpen={isLeadFormOpen}
+        setIsOpen={setIsLeadFormOpen}
+        source={leadSource}
+      />
     </>
   );
 }
