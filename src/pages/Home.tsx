@@ -15,8 +15,12 @@ export default function Home() {
       <section id="features">
         <FeaturesSection />
       </section>
-      <HowItWorksSection />
-      <FAQSection />
+      <section id="how-it-works">
+        <HowItWorksSection />
+      </section>
+      <section id="faq">
+        <FAQSection />
+      </section>
       <CtaSection openLeadForm={openLeadForm} />
       <LeadCaptureForm 
         isOpen={isLeadFormOpen}

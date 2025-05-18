@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
 
 interface HeroSectionProps {
   openLeadForm: (source: string) => void;
@@ -33,8 +32,9 @@ export const HeroSection = ({ openLeadForm }: HeroSectionProps) => {
               <Button 
                 size="lg" 
                 variant="outline"
+                asChild
               >
-                <Link to="/how-it-works">How It Works</Link>
+                <a href="/#how-it-works">How It Works</a>
               </Button>
             </div>
           </div>
