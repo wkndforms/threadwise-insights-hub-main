@@ -5,26 +5,38 @@ import { Menu, X } from "lucide-react";
 import { LeadCaptureForm } from "../lead-capture/LeadCaptureForm";
 import { useLeadCapture } from "@/hooks/use-lead-capture";
 
-const navItems = [
-  { label: "Home", path: "/" },
-  { label: "Features", path: "/features" },
-  { label: "How It Works", path: "/how-it-works" },
-  { label: "FAQ", path: "/faq" },
+// Updated nav items for SPA scroll and lead form triggers
+const scrollNavItems = [
+  { label: "Features", path: "/#features" },
+  { label: "How It Works", path: "/#how-it-works" },
+  { label: "FAQ", path: "/#faq" },
+];
+
+const leadFormNavItems = [
+  // { label: "Blog", source: "navbar-blog" }, // Removed
+  // { label: "Changelog", source: "navbar-changelog" }, // Removed
+  // { label: "Documentation", source: "navbar-documentation" }, // Removed
+  // { label: "Docs", source: "navbar-docs" }, // Removed
+  // { label: "API", source: "navbar-api" }, // Removed
 ];
 
 export const MarketingNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { isLeadFormOpen, setIsLeadFormOpen, leadSource, openLeadForm } = useLeadCapture();
 
-  // Function to handle navigation item clicks
-  const handleNavClick = (path: string) => {
-    // In a real app, we would use router navigation
-    // For now, just close the mobile menu
-    setIsOpen(false);
+  const handleScrollLinkClick = (path: string) => {
+    setIsOpen(false); // Close mobile menu
+    // Smooth scroll is handled by CSS, direct navigation for hash links
+    window.location.href = path;
+  };
+
+  const handleLeadFormLinkClick = (source: string) => {
+    openLeadForm(source);
+    setIsOpen(false); // Close mobile menu
   };
 
   return (
-    <nav className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+    <nav className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center">
@@ -37,24 +49,41 @@ export const MarketingNavbar = () => {
 
           {/* Desktop navigation */}
           <div className="hidden md:block">
-            <div className="ml-10 flex items-center space-x-4">
-              {navItems.map((item) => (
+            <div className="ml-10 flex items-center space-x-1 lg:space-x-4">
+              {scrollNavItems.map((item) => (
                 <a
-                  key={item.path}
+                  key={item.label}
                   href={item.path}
                   className="px-3 py-2 text-sm font-medium rounded-md hover:bg-accent hover:text-accent-foreground transition-colors"
-                  onClick={() => handleNavClick(item.path)}
+                  onClick={(e) => {
+                    // e.preventDefault(); // Keep default for hash link navigation
+                    handleScrollLinkClick(item.path);
+                  }}
                 >
                   {item.label}
                 </a>
               ))}
+              {leadFormNavItems.map((item) => (
+                <a
+                  key={item.label}
+                  href="#"
+                  className="px-3 py-2 text-sm font-medium rounded-md hover:bg-accent hover:text-accent-foreground transition-colors"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handleLeadFormLinkClick(item.source);
+                  }}
+                >
+                  {item.label}
+                </a>
+              ))}
+              {/* Original Contact link - already opens lead form */}
               <a
                 href="#"
                 className="px-3 py-2 text-sm font-medium rounded-md hover:bg-accent hover:text-accent-foreground transition-colors"
                 onClick={(e) => {
                   e.preventDefault();
                   openLeadForm("navbar-contact");
-                  handleNavClick("#contact-form");
+                  handleScrollLinkClick("#contact-form");
                 }}
               >
                 Contact
@@ -94,23 +123,40 @@ export const MarketingNavbar = () => {
       {isOpen && (
         <div className="md:hidden animate-fade-in">
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-            {navItems.map((item) => (
+            {scrollNavItems.map((item) => (
               <a
-                key={item.path}
+                key={item.label}
                 href={item.path}
                 className="block px-3 py-2 rounded-md text-base font-medium hover:bg-accent hover:text-accent-foreground"
-                onClick={() => handleNavClick(item.path)}
+                onClick={(e) => {
+                  // e.preventDefault();
+                  handleScrollLinkClick(item.path);
+                }}
               >
                 {item.label}
               </a>
             ))}
+            {leadFormNavItems.map((item) => (
+              <a
+                key={item.label}
+                href="#"
+                className="block px-3 py-2 rounded-md text-base font-medium hover:bg-accent hover:text-accent-foreground"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleLeadFormLinkClick(item.source);
+                }}
+              >
+                {item.label}
+              </a>
+            ))}
+            {/* Original Contact link for mobile - already opens lead form */}
             <a
               href="#"
               className="block px-3 py-2 rounded-md text-base font-medium hover:bg-accent hover:text-accent-foreground"
               onClick={(e) => {
                 e.preventDefault();
                 openLeadForm("navbar-contact-mobile");
-                handleNavClick("#contact-form");
+                handleScrollLinkClick("#contact-form");
               }}
             >
               Contact
