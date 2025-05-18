@@ -1,5 +1,7 @@
 import { HeroSection } from "@/components/home/HeroSection";
 import { FeaturesSection } from "@/components/home/FeaturesSection";
+import { HowItWorksSection } from "@/components/home/HowItWorksSection";
+import { FAQSection } from "@/components/home/FAQSection";
 import { CtaSection } from "@/components/home/CtaSection";
 import { LeadCaptureForm } from "@/components/lead-capture/LeadCaptureForm";
 import { useLeadCapture } from "@/hooks/use-lead-capture";
@@ -10,7 +12,11 @@ export default function Home() {
   return (
     <>
       <HeroSection openLeadForm={openLeadForm} />
-      <FeaturesSection />
+      <section id="features">
+        <FeaturesSection />
+      </section>
+      <HowItWorksSection />
+      <FAQSection />
       <CtaSection openLeadForm={openLeadForm} />
       <LeadCaptureForm 
         isOpen={isLeadFormOpen}
