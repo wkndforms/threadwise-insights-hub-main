@@ -10,6 +10,7 @@ import { MarketingLayout } from "./components/layouts/marketing-layout";
 import { AboutPage } from "@/pages/AboutPage";
 import { PrivacyPage } from "@/pages/PrivacyPage";
 import { TermsPage } from "@/pages/TermsPage";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 
 const queryClient = new QueryClient();
 
@@ -35,11 +36,11 @@ const App = () => (
               {/* <Route path="/documentation" element={<Documentation />} /> */}
               {/* <Route path="/docs" element={<Docs />} /> */}
               {/* <Route path="/api" element={<ApiDocs />} /> */}
-              
               {/* Catch All */}
               <Route path="*" element={<NotFound />} />
             </Route>
           </Routes>
+          <SpeedInsights /> {/* Add the component here */}
         </BrowserRouter>
       </TooltipProvider>
     </ThemeProvider>
