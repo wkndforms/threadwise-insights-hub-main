@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { DashboardLayout } from "@/components/layouts/dashboard-layout";
@@ -210,7 +209,7 @@ export default function Dashboard() {
                   </div>
                 </CardContent>
                 <CardFooter>
-                  <Button className="w-full bg-gradient-to-r from-threadwise-purple to-threadwise-purple-dark hover:opacity-90" asChild>
+                  <Button className="w-full bg-gradient-to-r from-forumscout-purple to-forumscout-purple-dark hover:opacity-90" asChild>
                     <Link to="/dashboard/forums">
                       <Eye className="h-4 w-4 mr-2" />
                       View All Forums
@@ -258,11 +257,9 @@ export default function Dashboard() {
                   ))}
                 </div>
               </CardContent>
-              <CardFooter>
-                <Button className="w-full" asChild>
-                  <Link to="/dashboard/forums">
-                    Manage Forum Configuration
-                  </Link>
+              <CardFooter className="pt-4">
+                <Button className="w-full bg-gradient-to-r from-forumscout-purple to-forumscout-purple-dark hover:opacity-90" asChild>
+                  <Link to="/forum-config">Manage Forums</Link>
                 </Button>
               </CardFooter>
             </Card>
@@ -313,9 +310,8 @@ export default function Dashboard() {
                   </div>
                 </div>
               </CardContent>
-              <CardFooter>
-                <Button className="w-full bg-gradient-to-r from-threadwise-purple to-threadwise-purple-dark hover:opacity-90" onClick={handleViewAnalytics}>
-                  <BarChart className="h-4 w-4 mr-2" />
+              <CardFooter className="pt-4">
+                <Button className="w-full bg-gradient-to-r from-forumscout-purple to-forumscout-purple-dark hover:opacity-90" onClick={handleViewAnalytics}>
                   View All Analytics
                 </Button>
               </CardFooter>

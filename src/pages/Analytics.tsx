@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { DashboardLayout } from "@/components/layouts/dashboard-layout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -145,14 +144,14 @@ export default function Analytics() {
               </CardHeader>
               <CardContent>
                 <div className="text-2xl font-bold">{stat.value}</div>
-                <p className="text-xs text-muted-foreground flex items-center mt-1">
+                <div className="flex items-center text-sm text-muted-foreground">
                   {stat.trend === "up" ? (
-                    <ArrowUpRight className="h-3 w-3 mr-1 text-threadwise-accent-red" />
+                    <ArrowUpRight className="h-3 w-3 mr-1 text-forumscout-accent-red" />
                   ) : (
-                    <ArrowDownRight className="h-3 w-3 mr-1 text-threadwise-accent-green" />
+                    <ArrowDownRight className="h-3 w-3 mr-1 text-forumscout-accent-green" />
                   )}
-                  {stat.change} {stat.description}
-                </p>
+                  <span>{stat.change} {stat.description}</span>
+                </div>
               </CardContent>
             </Card>
           ))}

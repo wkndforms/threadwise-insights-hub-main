@@ -19,7 +19,7 @@ export default function Docs() {
               {pageTitle}
             </h1>
             <p className="text-muted-foreground md:text-xl max-w-[700px] pt-2">
-              The content of our {pageName.toLowerCase()} is exclusively available to ThreadWise customers.
+              The content of our {pageName.toLowerCase()} is exclusively available to ForumScout customers.
             </p>
             <p className="text-muted-foreground md:text-lg max-w-[700px] mt-1">
               Please sign up for a free trial or contact us to learn more about becoming a customer and gaining access.
@@ -27,8 +27,8 @@ export default function Docs() {
             <div className="flex flex-col sm:flex-row gap-3 pt-6">
               <Button
                 size="lg"
-                className="bg-gradient-to-r from-threadwise-purple to-threadwise-purple-dark hover:opacity-90"
-                onClick={() => openLeadForm(`docs-placeholder-cta`)}
+                className="mt-8 bg-gradient-to-r from-forumscout-purple to-forumscout-purple-dark hover:opacity-90"
+                onClick={() => openLeadForm(`${pageName.toLowerCase()}-placeholder-cta`)}
               >
                 Start Free Trial
               </Button>

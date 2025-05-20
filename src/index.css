@@ -108,7 +108,7 @@ html {
   }
 
   .glass-card-dark {
-    @apply bg-threadwise-navy-light/40 backdrop-blur-sm border border-white/10 rounded-xl shadow-lg;
+    @apply bg-forumscout-navy-light/40 backdrop-blur-sm border border-white/10 rounded-xl shadow-lg;
   }
 
   .animate-fade {
@@ -128,7 +128,7 @@ html {
   }
 
   .cta-button {
-    @apply bg-gradient-to-r from-threadwise-purple to-threadwise-purple-dark text-white font-medium px-6 py-3 rounded-lg hover:shadow-lg transition-shadow duration-300;
+    @apply bg-gradient-to-r from-forumscout-purple to-forumscout-purple-dark text-white font-medium px-6 py-3 rounded-lg hover:shadow-lg transition-shadow duration-300;
   }
 
   .section-container {

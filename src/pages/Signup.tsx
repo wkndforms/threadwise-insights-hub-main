@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthLayout } from "@/components/layouts/auth-layout";
@@ -159,7 +158,7 @@ export default function Signup() {
           
           <Button
             type="submit"
-            className="w-full bg-gradient-to-r from-threadwise-purple to-threadwise-purple-dark hover:opacity-90"
+            className="w-full bg-gradient-to-r from-forumscout-purple to-forumscout-purple-dark hover:opacity-90"
             disabled={isLoading}
           >
             {isLoading ? "Creating account..." : "Create account"}

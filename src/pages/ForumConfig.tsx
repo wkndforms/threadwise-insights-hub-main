@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { DashboardLayout } from "@/components/layouts/dashboard-layout";
 import { Button } from "@/components/ui/button";
@@ -106,7 +105,7 @@ export default function ForumConfig() {
         <div className="flex flex-col space-y-2">
           <h1 className="text-3xl font-bold tracking-tight">Forums Configuration</h1>
           <p className="text-muted-foreground">
-            Manage which forums Threadwise will monitor for unanswered questions
+            Manage which forums ForumScout will monitor for unanswered questions
           </p>
         </div>
 
@@ -228,7 +227,7 @@ export default function ForumConfig() {
                               </SelectContent>
                             </Select>
                             <FormDescription>
-                              How often Threadwise should check for new questions
+                              How often ForumScout should check for new questions
                             </FormDescription>
                             <FormMessage />
                           </FormItem>
@@ -249,12 +248,13 @@ export default function ForumConfig() {
                               <Switch
                                 checked={field.value}
                                 onCheckedChange={field.onChange}
+                                className="data-[state=checked]:bg-forumscout-purple"
                               />
                             </FormControl>
                           </FormItem>
                         )}
                       />
-                      <Button type="submit" className="w-full bg-gradient-to-r from-threadwise-purple to-threadwise-purple-dark hover:opacity-90">
+                      <Button type="submit" className="w-full bg-gradient-to-r from-forumscout-purple to-forumscout-purple-dark hover:opacity-90">
                         <Plus className="mr-2 h-4 w-4" /> Add Forum
                       </Button>
                     </form>
@@ -331,38 +331,37 @@ export default function ForumConfig() {
                         render={({ field }) => (
                           <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
                             <div className="space-y-0.5">
-                              <FormLabel>Enable Email Notifications</FormLabel>
+                              <FormLabel>Email Notifications</FormLabel>
                               <FormDescription>
-                                Receive email alerts about unanswered questions
+                                Receive email alerts for new questions.
                               </FormDescription>
                             </div>
                             <FormControl>
                               <Switch
                                 checked={field.value}
                                 onCheckedChange={field.onChange}
+                                className="data-[state=checked]:bg-forumscout-purple"
                               />
                             </FormControl>
                           </FormItem>
                         )}
                       />
-                      {form.watch("notifyEmail") && (
-                        <FormField
-                          control={form.control}
-                          name="emailRecipients"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Email Recipients</FormLabel>
-                              <FormControl>
-                                <Input placeholder="email1@example.com, email2@example.com" {...field} />
-                              </FormControl>
-                              <FormDescription>
-                                Comma-separated email addresses
-                              </FormDescription>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      )}
+                      <FormField
+                        control={form.control}
+                        name="emailRecipients"
+                        render={({ field }) => (
+                          <FormItem className={form.getValues("notifyEmail") ? "" : "hidden"}>
+                            <FormLabel>Email Recipients</FormLabel>
+                            <FormControl>
+                              <Input placeholder="team@example.com, support@example.com" {...field} />
+                            </FormControl>
+                            <FormDescription>
+                              Comma-separated list of email addresses.
+                            </FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
                     </div>
 
                     <Separator />
@@ -375,38 +374,37 @@ export default function ForumConfig() {
                         render={({ field }) => (
                           <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
                             <div className="space-y-0.5">
-                              <FormLabel>Enable Slack Notifications</FormLabel>
+                              <FormLabel>Slack Notifications</FormLabel>
                               <FormDescription>
-                                Send alerts to Slack channels
+                                Get Slack messages for new questions.
                               </FormDescription>
                             </div>
                             <FormControl>
                               <Switch
                                 checked={field.value}
                                 onCheckedChange={field.onChange}
+                                className="data-[state=checked]:bg-forumscout-purple"
                               />
                             </FormControl>
                           </FormItem>
                         )}
                       />
-                      {form.watch("notifySlack") && (
-                        <FormField
-                          control={form.control}
-                          name="slackChannel"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Slack Channel</FormLabel>
-                              <FormControl>
-                                <Input placeholder="#support-alerts" {...field} />
-                              </FormControl>
-                              <FormDescription>
-                                Channel where notifications will be sent
-                              </FormDescription>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      )}
+                      <FormField
+                        control={form.control}
+                        name="slackChannel"
+                        render={({ field }) => (
+                          <FormItem className={form.getValues("notifySlack") ? "" : "hidden"}>
+                            <FormLabel>Slack Channel</FormLabel>
+                            <FormControl>
+                              <Input placeholder="#support-alerts" {...field} />
+                            </FormControl>
+                            <FormDescription>
+                              The Slack channel to send notifications to.
+                            </FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
                     </div>
 
                     <Separator />
@@ -419,41 +417,40 @@ export default function ForumConfig() {
                         render={({ field }) => (
                           <FormItem className="flex flex-row items-center justify-between rounded-lg border p-3 shadow-sm">
                             <div className="space-y-0.5">
-                              <FormLabel>Enable MS Teams Notifications</FormLabel>
+                              <FormLabel>Microsoft Teams Notifications</FormLabel>
                               <FormDescription>
-                                Send alerts to Microsoft Teams
+                                Get Teams messages for new questions.
                               </FormDescription>
                             </div>
                             <FormControl>
                               <Switch
                                 checked={field.value}
                                 onCheckedChange={field.onChange}
+                                className="data-[state=checked]:bg-forumscout-purple"
                               />
                             </FormControl>
                           </FormItem>
                         )}
                       />
-                      {form.watch("notifyTeams") && (
-                        <FormField
-                          control={form.control}
-                          name="teamsWebhook"
-                          render={({ field }) => (
-                            <FormItem>
-                              <FormLabel>Teams Webhook URL</FormLabel>
-                              <FormControl>
-                                <Input placeholder="https://outlook.office.com/webhook/..." {...field} />
-                              </FormControl>
-                              <FormDescription>
-                                Webhook URL for your Teams channel
-                              </FormDescription>
-                              <FormMessage />
-                            </FormItem>
-                          )}
-                        />
-                      )}
+                      <FormField
+                        control={form.control}
+                        name="teamsWebhook"
+                        render={({ field }) => (
+                          <FormItem className={form.getValues("notifyTeams") ? "" : "hidden"}>
+                            <FormLabel>Teams Webhook URL</FormLabel>
+                            <FormControl>
+                              <Input placeholder="https://outlook.office.com/webhook/..." {...field} />
+                            </FormControl>
+                            <FormDescription>
+                              The Microsoft Teams incoming webhook URL.
+                            </FormDescription>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
                     </div>
 
-                    <Button type="button" onClick={() => toast.success("Notification settings saved")} className="w-full bg-gradient-to-r from-threadwise-purple to-threadwise-purple-dark hover:opacity-90">
+                    <Button type="button" onClick={() => toast.success("Notification settings saved")} className="w-full bg-gradient-to-r from-forumscout-purple to-forumscout-purple-dark hover:opacity-90">
                       <Save className="mr-2 h-4 w-4" /> Save Notification Settings
                     </Button>
                   </div>
@@ -481,3 +478,4 @@ export default function ForumConfig() {
     </DashboardLayout>
   );
 }
+

@@ -14,8 +14,8 @@ export const MarketingFooter = () => {
             {/* Logo and description */}
             <div className="col-span-1 md:col-span-1">
               <Link to="/" className="flex items-center space-x-2">
-                <span className="text-xl font-bold bg-gradient-to-r from-threadwise-purple to-threadwise-purple-dark inline-block text-transparent bg-clip-text">
-                  Threadwise
+                <span className="text-xl font-bold bg-gradient-to-r from-forumscout-purple to-forumscout-purple-dark inline-block text-transparent bg-clip-text">
+                  ForumScout
                 </span>
               </Link>
               <p className="mt-4 text-sm text-muted-foreground">
@@ -149,10 +149,8 @@ export const MarketingFooter = () => {
             </div>
           </div>
 
-          <div className="mt-12 pt-8 border-t border-border">
-            <p className="text-sm text-muted-foreground text-center">
-              &copy; {new Date().getFullYear()} Threadwise. All rights reserved.
-            </p>
+          <div className="mt-12 border-t pt-8 text-center text-sm text-muted-foreground">
+            &copy; {new Date().getFullYear()} ForumScout. All rights reserved.
           </div>
         </div>
       </footer>

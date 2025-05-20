@@ -1,4 +1,3 @@
-
 import { MessageSquare, Bell, BarChart3, Shield } from "lucide-react";
 import { FeatureCard } from "./FeatureCard";
 
@@ -83,11 +82,9 @@ export const FeaturesSection = () => {
           <div className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-3">
             Features
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tighter">
-            Everything you need to stay on top of forum activity
-          </h2>
-          <p className="text-muted-foreground md:text-lg mt-4">
-            Threadwise provides powerful tools to monitor, analyze, and respond to forum activity across multiple platforms.
+          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center">Features that Empower Your Community</h2>
+          <p className="mx-auto max-w-[700px] text-muted-foreground md:text-xl/relaxed text-center">
+            ForumScout provides powerful tools to monitor, analyze, and respond to forum activity across multiple platforms.
           </p>
         </div>
 

@@ -1,4 +1,3 @@
-
 import { ReactNode, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { ThemeToggle } from "../ui/theme-toggle";
@@ -86,9 +85,10 @@ export const DashboardLayout = ({
       >
         <div className="flex flex-col h-full">
           <div className="flex items-center justify-between p-4 border-b">
-            <Link to="/dashboard" className="flex items-center space-x-2">
-              <span className="text-xl font-bold bg-gradient-to-r from-threadwise-purple to-threadwise-purple-dark inline-block text-transparent bg-clip-text">
-                Threadwise
+            <Link to="/dashboard" className="flex items-center gap-2">
+              {/* <img src="/placeholder.svg" alt="Logo" className="h-7 w-7" /> */}
+              <span className="text-xl font-bold bg-gradient-to-r from-forumscout-purple to-forumscout-purple-dark inline-block text-transparent bg-clip-text">
+                ForumScout
               </span>
             </Link>
             <button

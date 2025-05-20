@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, MessageSquare, Users, TrendingUp } from "lucide-react";
 
 interface HeroSectionProps {
   openLeadForm: (source: string) => void;
@@ -11,11 +11,11 @@ export const HeroSection = ({ openLeadForm }: HeroSectionProps) => {
       <div className="container px-4 md:px-6 mx-auto">
         <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
           <div className="flex flex-col justify-center space-y-4 animate-fade-in">
-            <div className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-2">
-              Introducing Threadwise
+            <div className="inline-block rounded-lg bg-muted px-3 py-1 text-sm">
+              Introducing ForumScout
             </div>
-            <h1 className="text-3xl md:text-5xl font-bold tracking-tighter">
-              Never miss an unanswered forum question again
+            <h1 className="text-4xl font-extrabold tracking-tight lg:text-5xl xl:text-6xl bg-gradient-to-r from-primary via-forumscout-purple to-forumscout-accent-blue text-transparent bg-clip-text">
+              Stop Missing Unanswered Forum Questions
             </h1>
             <p className="text-muted-foreground md:text-xl max-w-[600px]">
               Smart monitoring for your forums that alerts you about unanswered questions and helps you improve response rates.
@@ -23,7 +23,7 @@ export const HeroSection = ({ openLeadForm }: HeroSectionProps) => {
             <div className="flex flex-col sm:flex-row gap-3 pt-4">
               <Button
                 size="lg"
-                className="bg-gradient-to-r from-threadwise-purple to-threadwise-purple-dark hover:opacity-90"
+                className="bg-gradient-to-r from-forumscout-purple to-forumscout-purple-dark hover:opacity-90 shadow-lg"
                 onClick={() => openLeadForm("hero-cta")}
               >
                 Start Free Trial
@@ -40,35 +40,22 @@ export const HeroSection = ({ openLeadForm }: HeroSectionProps) => {
           </div>
           <div className="relative lg:ml-auto animate-scale-in">
             <div className="relative rounded-xl overflow-hidden shadow-2xl">
-              <div className="bg-gradient-to-tr from-threadwise-purple-light/30 to-threadwise-navy-light/20 backdrop-blur-sm p-8 md:p-12 rounded-xl border border-white/10">
-                <div className="rounded-lg bg-card shadow-lg p-4 mb-4">
-                  <div className="h-2 w-1/2 bg-primary/20 rounded-full mb-2"></div>
-                  <div className="flex items-center mt-3">
-                    <div className="bg-threadwise-accent-green/20 text-threadwise-accent-green p-1 rounded-full">
-                      <ArrowRight className="h-5 w-5" />
+              <div className="bg-gradient-to-tr from-forumscout-purple-light/30 to-forumscout-navy-light/20 backdrop-blur-sm p-8 md:p-12 rounded-xl border border-white/10">
+                <div className="grid md:grid-cols-3 gap-8">
+                  <div className="flex flex-col items-center text-center p-4 bg-card/50 rounded-lg">
+                    <div className="bg-forumscout-accent-green/20 text-forumscout-accent-green p-1 rounded-full">
+                      <MessageSquare className="h-6 w-6" />
                     </div>
-                    <div className="ml-2 h-2 w-12 bg-primary/20 rounded-full"></div>
-                    <div className="ml-auto h-2 w-20 bg-primary/10 rounded-full"></div>
                   </div>
-                </div>
-                <div className="rounded-lg bg-card shadow-lg p-4 mb-4">
-                  <div className="h-2 w-3/4 bg-primary/20 rounded-full mb-2"></div>
-                  <div className="flex items-center mt-3">
-                    <div className="bg-threadwise-accent-blue/20 text-threadwise-accent-blue p-1 rounded-full">
-                      <ArrowRight className="h-5 w-5" />
+                  <div className="flex flex-col items-center text-center p-4 bg-card/50 rounded-lg">
+                    <div className="bg-forumscout-accent-blue/20 text-forumscout-accent-blue p-1 rounded-full">
+                      <Users className="h-6 w-6" />
                     </div>
-                    <div className="ml-2 h-2 w-16 bg-primary/20 rounded-full"></div>
-                    <div className="ml-auto h-2 w-12 bg-primary/10 rounded-full"></div>
                   </div>
-                </div>
-                <div className="rounded-lg bg-card shadow-lg p-4">
-                  <div className="h-2 w-2/3 bg-primary/20 rounded-full mb-2"></div>
-                  <div className="flex items-center mt-3">
-                    <div className="bg-threadwise-accent-orange/20 text-threadwise-accent-orange p-1 rounded-full">
-                      <ArrowRight className="h-5 w-5" />
+                  <div className="flex flex-col items-center text-center p-4 bg-card/50 rounded-lg">
+                    <div className="bg-forumscout-accent-orange/20 text-forumscout-accent-orange p-1 rounded-full">
+                      <TrendingUp className="h-6 w-6" />
                     </div>
-                    <div className="ml-2 h-2 w-10 bg-primary/20 rounded-full"></div>
-                    <div className="ml-auto h-2 w-16 bg-primary/10 rounded-full"></div>
                   </div>
                 </div>
               </div>
