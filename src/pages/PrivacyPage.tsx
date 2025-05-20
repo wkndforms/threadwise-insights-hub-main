@@ -1,23 +1,26 @@
-export const PrivacyPage = () => {
+export function PrivacyPage() {
   return (
-    <div className="container mx-auto px-4 py-12 min-h-screen">
+    <section className="section-container">
       <h1 className="text-4xl font-bold mb-8 text-center">Privacy Policy</h1>
-      <div className="prose prose-lg mx-auto">
+      <div className="max-w-3xl mx-auto space-y-6">
         <p>
-          Your privacy is important to us. This Privacy Policy explains how Threadwise collects, uses, and protects your personal information in relation to our website and services.
+          Your privacy is important to us. This Privacy Policy explains how ForumScout collects, uses, and protects your personal information in relation to our website and services.
         </p>
-
-        <h2 className="text-2xl font-semibold mt-8 mb-4">Our Product vs. Our Website</h2>
+        <h2 className="text-2xl font-semibold pt-4">Information We Collect</h2>
         <p>
-          Our primary product, Threadwise Insights Hub, is designed to be deployed and run on our customers' own servers or cloud infrastructure. Threadwise (as a company) does not collect, store, or have access to the data processed by the Threadwise Insights Hub product once it is operating within our customers' environments. This policy primarily addresses data practices related to this marketing and informational website.
+          Our primary product, ForumScout Insights Hub, is designed to be deployed and run on our customers' own servers or cloud infrastructure. ForumScout (as a company) does not collect, store, or have access to the data processed by the ForumScout Insights Hub product once it is operating within our customers' environments. This policy primarily addresses data practices related to this marketing and informational website.
         </p>
-
-        <h2 className="text-2xl font-semibold mt-8 mb-4">Information We Collect Via This Website</h2>
-        <p>
-          The only Personal Identifiable Information (PII) we actively collect through this website is the information you voluntarily provide to us when you fill out our "Start Free Trial" or "Contact" forms. This information typically includes:
-        </p>
+        <p>When you visit our website or interact with us, we may collect the following types of information:</p>
         <ul>
           <li><strong>Contact Information:</strong> Your name, email address, and phone number, as provided by you.</li>
+          <li>To provide, operate, and maintain our website.</li>
+          <li>To improve, personalize, and expand our website.</li>
+          <li>To understand and analyze how you use our website.</li>
+          <li>To develop new products, services, features, and functionality.</li>
+          <li>To communicate with you, either directly or through one of our partners, including for customer service, to provide you with updates and other information relating to the website, and for marketing and promotional purposes.</li>
+          <li>To respond to your inquiries about ForumScout Insights Hub.</li>
+          <li>To send you emails.</li>
+          <li>To find and prevent fraud.</li>
         </ul>
         <p>
           Our website may automatically collect some non-personally identifiable information as you browse, such as your browser type, operating system, and pages visited. This information is used in an aggregated manner to improve our website's functionality and user experience. We use essential cookies for basic website operation.
@@ -28,7 +31,7 @@ export const PrivacyPage = () => {
           The contact information you provide through our website forms is used solely for the following purposes:
         </p>
         <ul>
-          <li>To respond to your inquiries about Threadwise Insights Hub.</li>
+          <li>To respond to your inquiries about ForumScout Insights Hub.</li>
           <li>To provide you with information you have requested about our product and services, including details about trial access.</li>
           <li>To communicate with you regarding your specific request or submission.</li>
         </ul>
@@ -41,7 +44,7 @@ export const PrivacyPage = () => {
           We do not sell the personal information collected through our website forms.
         </p>
         <p>
-          To facilitate communication and process your inquiries submitted via our website, we utilize a third-party form submission service (Getform.io). When you submit a form, the information you provide (name, email, phone number) is transmitted to this service, which then delivers your inquiry to us. We advise you to be aware of Getform.io's own privacy policy.
+          To facilitate communication and process your inquiries submitted via our website, we utilize a third-party form submission service. When you submit a form, the information you provide (name, email, phone number) is transmitted to this service, which then delivers your inquiry to us. We advise you to be aware of the third-party service's own privacy policy.
         </p>
         <p>
           Other than for the purpose described above, we will not share your personal information with other third parties unless strictly necessary to respond to your request, required by law, or to protect our legal rights.
@@ -70,6 +73,6 @@ export const PrivacyPage = () => {
           Last updated: {new Date().toLocaleDateString()}
         </p>
       </div>
-    </div>
+    </section>
   );
-}; 
+} 

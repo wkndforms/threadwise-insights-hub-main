@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 import { LeadCaptureForm } from "../lead-capture/LeadCaptureForm";
 import { useLeadCapture } from "@/hooks/use-lead-capture";
+import { Link } from "react-router-dom";
 
 // Updated nav items for SPA scroll and lead form triggers
 const scrollNavItems = [
@@ -40,11 +41,11 @@ export const MarketingNavbar = () => {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center">
-            <a href="/" className="flex items-center space-x-2">
-              <span className="text-2xl font-bold bg-gradient-to-r from-threadwise-purple to-threadwise-purple-dark inline-block text-transparent bg-clip-text">
-                Threadwise
+            <Link to="/" className="flex items-center space-x-2">
+              <span className="text-2xl font-bold bg-gradient-to-r from-forumscout-purple to-forumscout-purple-dark inline-block text-transparent bg-clip-text">
+                ForumScout
               </span>
-            </a>
+            </Link>
           </div>
 
           {/* Desktop navigation */}
@@ -94,10 +95,10 @@ export const MarketingNavbar = () => {
           <div className="hidden md:flex items-center space-x-4">
             <ThemeToggle />
             <Button 
-              className="bg-gradient-to-r from-threadwise-purple to-threadwise-purple-dark hover:opacity-90"
-              onClick={() => openLeadForm("navbar")}
+              asChild
+              className="bg-gradient-to-r from-forumscout-purple to-forumscout-purple-dark hover:opacity-90"
             >
-              Start Free Trial
+              <Link to="/signup">Start Free Trial</Link>
             </Button>
           </div>
 
@@ -164,13 +165,10 @@ export const MarketingNavbar = () => {
             <div className="pt-4 pb-3 border-t border-border">
               <div className="space-y-2 px-3">
                 <Button 
-                  className="w-full justify-center bg-gradient-to-r from-threadwise-purple to-threadwise-purple-dark hover:opacity-90"
-                  onClick={() => {
-                    openLeadForm("navbar-mobile");
-                    setIsOpen(false);
-                  }}
+                  className="w-full justify-center bg-gradient-to-r from-forumscout-purple to-forumscout-purple-dark hover:opacity-90"
+                  asChild
                 >
-                  Start Free Trial
+                  <Link to="/signup">Sign Up</Link>
                 </Button>
               </div>
             </div>

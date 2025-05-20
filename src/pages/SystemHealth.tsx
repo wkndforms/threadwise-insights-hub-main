@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { DashboardLayout } from "@/components/layouts/dashboard-layout";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -159,7 +158,7 @@ export default function SystemHealth() {
           <div>
             <h1 className="text-3xl font-bold tracking-tight">System Health</h1>
             <p className="text-muted-foreground">
-              Monitor the health and performance of the Threadwise system
+              Monitor the health and performance of the ForumScout system
             </p>
           </div>
           <div className="flex items-center space-x-2">
@@ -183,7 +182,7 @@ export default function SystemHealth() {
               <div>
                 <CardTitle>System Status</CardTitle>
                 <CardDescription>
-                  Overall health of the Threadwise system
+                  Overall health of the ForumScout system
                 </CardDescription>
               </div>
               {services.some(s => s.status === "down") ? (
@@ -246,7 +245,7 @@ export default function SystemHealth() {
               <CardHeader>
                 <CardTitle>Service Status</CardTitle>
                 <CardDescription>
-                  Current operational status of all Threadwise services
+                  Current operational status of all ForumScout services
                 </CardDescription>
               </CardHeader>
               <CardContent>

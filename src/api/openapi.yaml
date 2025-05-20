@@ -1,13 +1,12 @@
-
 openapi: 3.0.0
 info:
-  title: Threadwise API
-  description: API for the Threadwise SaaS platform, which monitors unanswered forum questions and provides analytics
-  version: 1.0.0
+  title: ForumScout API
+  description: API for the ForumScout SaaS platform, which monitors unanswered forum questions and provides analytics
+  version: v1.0.0
   contact:
-    name: Threadwise Support
-    url: https://threadwise.com/support
-    email: support@threadwise.com
+    name: ForumScout Support
+    url: https://forumscout.com/support
+    email: support@forumscout.com
 
 servers:
   - url: https://forum-scrapper.onrender.com/api

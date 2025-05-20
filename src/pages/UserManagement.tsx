@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { DashboardLayout } from "@/components/layouts/dashboard-layout";
 import { Button } from "@/components/ui/button";
@@ -30,7 +29,8 @@ import {
   Mail, 
   Calendar, 
   Shield, 
-  User
+  User,
+  PlusCircle
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -202,11 +202,11 @@ export default function UserManagement() {
               Manage users and their permissions
             </p>
           </div>
-          <Button 
+          <Button
             onClick={handleAddUser}
-            className="bg-gradient-to-r from-threadwise-purple to-threadwise-purple-dark hover:opacity-90"
+            className="bg-gradient-to-r from-forumscout-purple to-forumscout-purple-dark hover:opacity-90"
           >
-            <UserPlus className="mr-2 h-4 w-4" /> Add User
+            <PlusCircle className="mr-2 h-4 w-4" /> Add New User
           </Button>
         </div>
 
@@ -309,9 +309,11 @@ export default function UserManagement() {
                               size="icon"
                               onClick={() => handleToggleUserStatus(user.id)}
                             >
-                              <Switch 
-                                checked={user.active} 
-                                className="data-[state=checked]:bg-threadwise-purple"
+                              <Switch
+                                id={`active-status-${user.id}`}
+                                checked={user.active}
+                                onCheckedChange={() => handleToggleUserStatus(user.id)}
+                                className="data-[state=checked]:bg-forumscout-purple"
                               />
                               <span className="sr-only">Toggle status</span>
                             </Button>

@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { LockIcon } from "lucide-react";
 import { useLeadCapture } from "@/hooks/use-lead-capture";
 import { LeadCaptureForm } from "@/components/lead-capture/LeadCaptureForm";
 
@@ -19,7 +20,7 @@ export default function ApiDocs() {
               {pageTitle}
             </h1>
             <p className="text-muted-foreground md:text-xl max-w-[700px] pt-2">
-              Access to our {pageName} documentation is exclusively available to ThreadWise customers.
+              Access to our {pageName} documentation is exclusively available to ForumScout customers.
             </p>
             <p className="text-muted-foreground md:text-lg max-w-[700px] mt-1">
               Please sign up for a free trial or contact us to learn more about becoming a customer and gaining access.
@@ -27,7 +28,7 @@ export default function ApiDocs() {
             <div className="flex flex-col sm:flex-row gap-3 pt-6">
               <Button
                 size="lg"
-                className="bg-gradient-to-r from-threadwise-purple to-threadwise-purple-dark hover:opacity-90"
+                className="bg-gradient-to-r from-forumscout-purple to-forumscout-purple-dark hover:opacity-90"
                 onClick={() => openLeadForm(`api-placeholder-cta`)}
               >
                 Start Free Trial

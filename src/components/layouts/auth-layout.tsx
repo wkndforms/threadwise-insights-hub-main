@@ -1,4 +1,3 @@
-
 import { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { ThemeToggle } from "../ui/theme-toggle";
@@ -24,8 +23,8 @@ export const AuthLayout = ({
       <div className="sm:mx-auto sm:w-full sm:max-w-md">
         <div className="text-center">
           <Link to="/" className="inline-block">
-            <span className="text-3xl font-bold bg-gradient-to-r from-threadwise-purple to-threadwise-purple-dark inline-block text-transparent bg-clip-text">
-              Threadwise
+            <span className="text-3xl font-bold bg-gradient-to-r from-forumscout-purple to-forumscout-purple-dark inline-block text-transparent bg-clip-text">
+              ForumScout
             </span>
           </Link>
         </div>

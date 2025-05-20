@@ -183,13 +183,13 @@ export const LeadCaptureForm = ({ isOpen, setIsOpen, source = "general" }: LeadC
         setEmailError("");
       }
     }}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-lg">
         {!isSubmitted ? (
           <>
             <DialogHeader>
-              <DialogTitle>Get Started with Threadwise</DialogTitle>
+              <DialogTitle>Get Started with ForumScout</DialogTitle>
               <DialogDescription>
-                Fill in your details below and our team will get in touch with you shortly.
+                Fill out the form below to get started with your free trial or to get in touch with our sales team.
               </DialogDescription>
             </DialogHeader>
             <form onSubmit={handleSubmit} className="space-y-4 pt-4">
@@ -245,7 +245,7 @@ export const LeadCaptureForm = ({ isOpen, setIsOpen, source = "general" }: LeadC
                 </Button>
                 <Button 
                   type="submit" 
-                  className="bg-gradient-to-r from-threadwise-purple to-threadwise-purple-dark hover:opacity-90"
+                  className="w-full bg-gradient-to-r from-forumscout-purple to-forumscout-purple-dark hover:opacity-90"
                   disabled={isSubmitting || !!emailError}
                 >
                   {isSubmitting ? "Submitting..." : "Submit"}
