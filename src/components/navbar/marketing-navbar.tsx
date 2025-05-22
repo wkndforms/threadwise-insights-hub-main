@@ -84,7 +84,6 @@ export const MarketingNavbar = () => {
                 onClick={(e) => {
                   e.preventDefault();
                   openLeadForm("navbar-contact");
-                  handleScrollLinkClick("#contact-form");
                 }}
               >
                 Contact
@@ -94,11 +93,11 @@ export const MarketingNavbar = () => {
 
           <div className="hidden md:flex items-center space-x-4">
             <ThemeToggle />
-            <Button 
-              asChild
+            <Button
               className="bg-gradient-to-r from-forumscout-purple to-forumscout-purple-dark hover:opacity-90"
+              onClick={() => openLeadForm('navbar-free-trial-desktop')}
             >
-              <Link to="/signup">Start Free Trial</Link>
+              Start Free Trial
             </Button>
           </div>
 
@@ -157,18 +156,17 @@ export const MarketingNavbar = () => {
               onClick={(e) => {
                 e.preventDefault();
                 openLeadForm("navbar-contact-mobile");
-                handleScrollLinkClick("#contact-form");
               }}
             >
               Contact
             </a>
             <div className="pt-4 pb-3 border-t border-border">
               <div className="space-y-2 px-3">
-                <Button 
+                <Button
                   className="w-full justify-center bg-gradient-to-r from-forumscout-purple to-forumscout-purple-dark hover:opacity-90"
-                  asChild
+                  onClick={() => openLeadForm('navbar-free-trial-mobile')}
                 >
-                  <Link to="/signup">Sign Up</Link>
+                  Start Free Trial
                 </Button>
               </div>
             </div>
@@ -177,8 +175,8 @@ export const MarketingNavbar = () => {
       )}
 
       {/* Lead Capture Form */}
-      <LeadCaptureForm 
-        isOpen={isLeadFormOpen} 
+      <LeadCaptureForm
+        isOpen={isLeadFormOpen}
         setIsOpen={setIsLeadFormOpen}
         source={leadSource}
       />

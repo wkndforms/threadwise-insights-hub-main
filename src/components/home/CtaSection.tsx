@@ -1,8 +1,10 @@
 import { Button } from "@/components/ui/button";
-import { useLeadCapture } from "@/hooks/use-lead-capture";
 
-export function CtaSection() {
-  const { openLeadForm } = useLeadCapture();
+interface CtaSectionProps {
+  openLeadForm: (source: string) => void;
+}
+
+export function CtaSection({ openLeadForm }: CtaSectionProps) {
   return (
     <section className="py-20 bg-gradient-to-br from-forumscout-purple/10 to-transparent">
       <div className="container mx-auto px-4 md:px-6">
@@ -17,14 +19,14 @@ export function CtaSection() {
             <Button
               size="lg"
               className="bg-gradient-to-r from-forumscout-purple to-forumscout-purple-dark hover:opacity-90"
-              onClick={() => openLeadForm("cta-section")}
+              onClick={() => openLeadForm("cta-free-trial")}
             >
               Start Free Trial
             </Button>
             <Button 
               size="lg" 
               variant="outline"
-              onClick={() => openLeadForm("footer-contact")}
+              onClick={() => openLeadForm("cta-contact-sales")}
             >
               Contact Sales
             </Button>
