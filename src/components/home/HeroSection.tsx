@@ -15,7 +15,7 @@ export const HeroSection = ({ openLeadForm }: HeroSectionProps) => {
               Introducing Forum Scout
             </div>
             <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight lg:text-5xl xl:text-6xl bg-gradient-to-r from-primary via-forumscout-purple to-forumscout-accent-blue text-transparent bg-clip-text leading-tight">
-              Stop Leaving Customers Hanging. Start Answering. Automatically.
+            Smart monitoring for your forums. Leave no question unanswered.
             </h1>
             <p className="text-muted-foreground text-base md:text-xl max-w-[600px] leading-relaxed">
               Forum Scout intelligently routes unanswered community questions to the right internal experts, fostering rapid responses and sky-high engagement.
