@@ -36,10 +36,10 @@ export const MarketingNavbar = () => {
   return (
     <nav className="border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div className="flex h-16 items-center justify-between">
+        <div className="flex h-14 md:h-16 items-center justify-between">
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-2">
-              <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 inline-block text-transparent bg-clip-text">
+              <span className="text-xl md:text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 inline-block text-transparent bg-clip-text">
                 ForumScout
               </span>
             </Link>
@@ -52,7 +52,7 @@ export const MarketingNavbar = () => {
                 <a
                   key={item.label}
                   href={item.path}
-                  className="px-3 py-2 text-sm font-medium rounded-md hover:bg-accent hover:text-accent-foreground transition-colors"
+                  className="px-3 py-2 text-sm font-medium rounded-md hover:bg-accent hover:text-accent-foreground transition-colors min-h-[40px] flex items-center"
                   onClick={(e) => {
                     // e.preventDefault(); // Keep default for hash link navigation
                     handleScrollLinkClick(item.path);
@@ -65,7 +65,7 @@ export const MarketingNavbar = () => {
                 <a
                   key={item.label}
                   href="#"
-                  className="px-3 py-2 text-sm font-medium rounded-md hover:bg-accent hover:text-accent-foreground transition-colors"
+                  className="px-3 py-2 text-sm font-medium rounded-md hover:bg-accent hover:text-accent-foreground transition-colors min-h-[40px] flex items-center"
                   onClick={(e) => {
                     e.preventDefault();
                     handleLeadFormLinkClick(item.source);
@@ -77,7 +77,7 @@ export const MarketingNavbar = () => {
               {/* Contact link */}
               <a
                 href="#"
-                className="px-3 py-2 text-sm font-medium rounded-md hover:bg-accent hover:text-accent-foreground transition-colors"
+                className="px-3 py-2 text-sm font-medium rounded-md hover:bg-accent hover:text-accent-foreground transition-colors min-h-[40px] flex items-center"
                 onClick={(e) => {
                   e.preventDefault();
                   openLeadForm("navbar-contact");
@@ -91,7 +91,7 @@ export const MarketingNavbar = () => {
           <div className="hidden md:flex items-center space-x-4">
             <ThemeToggle />
             <Button 
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 min-h-[40px]"
               onClick={() => openLeadForm('navbar-free-trial-desktop')}
             >
               Start Free Trial
@@ -103,7 +103,7 @@ export const MarketingNavbar = () => {
             <ThemeToggle />
             <button
               onClick={() => setIsOpen(!isOpen)}
-              className="inline-flex items-center justify-center p-2 rounded-md text-foreground hover:bg-accent hover:text-accent-foreground focus:outline-none"
+              className="inline-flex items-center justify-center p-2 rounded-md text-foreground hover:bg-accent hover:text-accent-foreground focus:outline-none min-h-[44px] min-w-[44px]"
             >
               <span className="sr-only">Open main menu</span>
               {isOpen ? (
@@ -118,13 +118,13 @@ export const MarketingNavbar = () => {
 
       {/* Mobile menu, show/hide based on menu state */}
       {isOpen && (
-        <div className="md:hidden animate-fade-in">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        <div className="md:hidden animate-fade-in bg-background border-t">
+          <div className="px-4 pt-2 pb-3 space-y-1">
             {scrollNavItems.map((item) => (
               <a
                 key={item.label}
                 href={item.path}
-                className="block px-3 py-2 rounded-md text-base font-medium hover:bg-accent hover:text-accent-foreground"
+                className="block px-4 py-3 rounded-md text-base font-medium hover:bg-accent hover:text-accent-foreground transition-colors min-h-[48px] flex items-center"
                 onClick={(e) => {
                   // e.preventDefault();
                   handleScrollLinkClick(item.path);
@@ -137,7 +137,7 @@ export const MarketingNavbar = () => {
               <a
                 key={item.label}
                 href="#"
-                className="block px-3 py-2 rounded-md text-base font-medium hover:bg-accent hover:text-accent-foreground"
+                className="block px-4 py-3 rounded-md text-base font-medium hover:bg-accent hover:text-accent-foreground transition-colors min-h-[48px] flex items-center"
                 onClick={(e) => {
                   e.preventDefault();
                   handleLeadFormLinkClick(item.source);
@@ -149,7 +149,7 @@ export const MarketingNavbar = () => {
             {/* Contact link for mobile */}
             <a
               href="#"
-              className="block px-3 py-2 rounded-md text-base font-medium hover:bg-accent hover:text-accent-foreground"
+              className="block px-4 py-3 rounded-md text-base font-medium hover:bg-accent hover:text-accent-foreground transition-colors min-h-[48px] flex items-center"
               onClick={(e) => {
                 e.preventDefault();
                 openLeadForm("navbar-contact-mobile");
@@ -158,9 +158,9 @@ export const MarketingNavbar = () => {
               Contact
             </a>
             <div className="pt-4 pb-3 border-t border-border">
-              <div className="space-y-2 px-3">
+              <div className="px-4">
                 <Button 
-                  className="w-full justify-center bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                  className="w-full justify-center bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 min-h-[48px] text-base"
                   onClick={() => openLeadForm('navbar-free-trial-mobile')}
                 >
                   Start Free Trial
