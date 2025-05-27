@@ -202,7 +202,7 @@ export default function UserManagement() {
               Manage users and their permissions
             </p>
           </div>
-          <Button
+          <Button 
             onClick={handleAddUser}
             className="bg-gradient-to-r from-forumscout-purple to-forumscout-purple-dark hover:opacity-90"
           >
@@ -309,9 +309,9 @@ export default function UserManagement() {
                               size="icon"
                               onClick={() => handleToggleUserStatus(user.id)}
                             >
-                              <Switch
+                              <Switch 
                                 id={`active-status-${user.id}`}
-                                checked={user.active}
+                                checked={user.active} 
                                 onCheckedChange={() => handleToggleUserStatus(user.id)}
                                 className="data-[state=checked]:bg-forumscout-purple"
                               />

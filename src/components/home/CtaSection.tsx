@@ -10,26 +10,31 @@ export function CtaSection({ openLeadForm }: CtaSectionProps) {
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex flex-col items-center text-center space-y-6 max-w-3xl mx-auto">
           <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-            Never Miss an Unanswered Question Again
+            Ready to Revolutionize Your Forum Engagement?
           </h2>
           <p className="text-muted-foreground md:text-xl">
-            Join hundreds of companies that use ForumScout to stay on top of customer questions and improve satisfaction.
+            See how Forum Scout can help your team answer more questions, faster, and build a more vibrant, supportive community.
           </p>
           <div className="flex flex-col sm:flex-row gap-3">
             <Button
               size="lg"
               className="bg-gradient-to-r from-forumscout-purple to-forumscout-purple-dark hover:opacity-90"
-              onClick={() => openLeadForm("cta-free-trial")}
+              onClick={() => openLeadForm("cta-request-demo")}
             >
-              Start Free Trial
+              Request a Demo
             </Button>
             <Button 
               size="lg" 
               variant="outline"
-              onClick={() => openLeadForm("cta-contact-sales")}
+              onClick={() => openLeadForm("cta-contact-info")}
             >
-              Contact Sales
+              Contact Us for More Info
             </Button>
+          </div>
+          <div className="text-sm text-muted-foreground">
+            <a href="/about" className="hover:text-foreground transition-colors">
+              Explore the Original Research →
+            </a>
           </div>
         </div>
       </div>

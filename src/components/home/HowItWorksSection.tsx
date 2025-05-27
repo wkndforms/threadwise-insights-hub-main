@@ -1,142 +1,124 @@
-import { MessageSquare, Bell, BarChart3, Settings } from "lucide-react";
+import { Search, Brain, Target, Bell, BarChart3, ArrowDown, CheckCircle } from "lucide-react";
 
 export const HowItWorksSection = () => {
-  return (
-    <>
-      {/* Steps Section */}
-      <section id="how-it-works" className="py-20 bg-background">
-        <div className="container px-4 md:px-6 mx-auto">
-          <div className="text-center max-w-[800px] mx-auto mb-12">
-            <div className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-3">
-              How It Works
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tighter">
-              A simple process for better forum management
-            </h2>
-            <p className="text-muted-foreground md:text-lg mt-4">
-              Threadwise makes it easy to monitor, track, and respond to forum activity. Here's how it works in a few simple steps.
-            </p>
-          </div>
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {/* Step 1 */}
-            <div className="flex flex-col items-center text-center">
-              <div className="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center text-2xl font-bold mb-4">
-                1
-              </div>
-              <h3 className="text-xl font-bold mb-2">Connect Your Forums</h3>
-              <p className="text-muted-foreground">
-                Easily integrate Threadwise with your existing forum platforms using our simple setup process.
-              </p>
-            </div>
-            {/* Step 2 */}
-            <div className="flex flex-col items-center text-center">
-              <div className="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center text-2xl font-bold mb-4">
-                2
-              </div>
-              <h3 className="text-xl font-bold mb-2">Monitor Unanswered Questions</h3>
-              <p className="text-muted-foreground">
-                Our system automatically detects and tracks unanswered questions across all connected forums.
-              </p>
-            </div>
-            {/* Step 3 */}
-            <div className="flex flex-col items-center text-center">
-              <div className="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center text-2xl font-bold mb-4">
-                3
-              </div>
-              <h3 className="text-xl font-bold mb-2">Receive Instant Alerts</h3>
-              <p className="text-muted-foreground">
-                Get notified via email, Slack, or other channels when new unanswered questions are detected.
-              </p>
-            </div>
-            {/* Step 4 */}
-            <div className="flex flex-col items-center text-center">
-              <div className="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center text-2xl font-bold mb-4">
-                4
-              </div>
-              <h3 className="text-xl font-bold mb-2">Respond Quickly</h3>
-              <p className="text-muted-foreground">
-                Use our dashboard to quickly respond to questions and improve customer satisfaction.
-              </p>
-            </div>
-            {/* Step 5 */}
-            <div className="flex flex-col items-center text-center">
-              <div className="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center text-2xl font-bold mb-4">
-                5
-              </div>
-              <h3 className="text-xl font-bold mb-2">Analyze Performance</h3>
-              <p className="text-muted-foreground">
-                Track response rates and identify areas for improvement with our advanced analytics tools.
-              </p>
-            </div>
-            {/* Step 6 */}
-            <div className="flex flex-col items-center text-center">
-              <div className="w-16 h-16 rounded-full bg-primary/10 text-primary flex items-center justify-center text-2xl font-bold mb-4">
-                6
-              </div>
-              <h3 className="text-xl font-bold mb-2">Improve Engagement</h3>
-              <p className="text-muted-foreground">
-                Boost customer engagement and build a stronger community by staying on top of forum activity.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+  const steps = [
+    {
+      icon: Search,
+      title: "Identify",
+      description: "Forum Scout monitors your community for unanswered questions.",
+      color: "from-blue-500 to-cyan-500"
+    },
+    {
+      icon: Brain,
+      title: "Analyze",
+      description: "Advanced LLMs dissect question content, topic, and sentiment.",
+      color: "from-purple-500 to-violet-500"
+    },
+    {
+      icon: Target,
+      title: "Route",
+      description: "Intelligently matches questions to the most relevant internal experts or teams.",
+      color: "from-green-500 to-emerald-500"
+    },
+    {
+      icon: Bell,
+      title: "Notify",
+      description: "Delivers targeted, actionable 'nudges' in your team's preferred communication channels (e.g., Slack).",
+      color: "from-orange-500 to-red-500"
+    },
+    {
+      icon: BarChart3,
+      title: "Track",
+      description: "Monitor response rates, resolution times, and engagement trends.",
+      color: "from-pink-500 to-rose-500"
+    }
+  ];
 
-      {/* Integration Section */}
-      <section className="py-20 bg-muted/50">
-        <div className="container px-4 md:px-6 mx-auto">
-          <div className="text-center max-w-[800px] mx-auto mb-12">
-            <div className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium mb-3">
-              Integrations
-            </div>
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tighter">
-              Connect with your favorite tools
-            </h2>
-            <p className="text-muted-foreground md:text-lg mt-4">
-              Threadwise seamlessly integrates with a variety of platforms to streamline your workflow.
-            </p>
+  return (
+    <section id="how-it-works" className="py-24 bg-gradient-to-b from-background to-muted/30 relative">
+      <div className="container px-4 md:px-6 mx-auto">
+        <div className="text-center max-w-4xl mx-auto mb-20">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-forumscout-accent-green/10 text-forumscout-accent-green text-sm font-medium mb-6">
+            <CheckCircle className="h-4 w-4" />
+            How It Works
           </div>
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {/* Integration Cards */}
-            <div className="bg-card border rounded-xl p-6 transition-all hover:shadow-md">
-              <div className="bg-primary/10 p-3 rounded-full w-fit mb-4">
-                <MessageSquare className="h-6 w-6 text-primary" />
+          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
+            Simple Setup, <span className="bg-gradient-to-r from-forumscout-purple to-forumscout-accent-blue text-transparent bg-clip-text">Powerful Results</span>
+          </h2>
+          <p className="text-xl text-muted-foreground leading-relaxed">
+            Forum Scout transforms your forum engagement with an intelligent, automated process that feels natural to your team.
+          </p>
+        </div>
+        
+        {/* Timeline Design */}
+        <div className="relative max-w-4xl mx-auto">
+          {/* Vertical connecting line */}
+          <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-forumscout-purple via-forumscout-accent-blue to-forumscout-accent-green rounded-full opacity-30 hidden lg:block"></div>
+          
+          {steps.map((step, index) => (
+            <div key={index} className="relative mb-16 lg:mb-24">
+              {/* Step content */}
+              <div className={`flex flex-col lg:flex-row items-center gap-8 lg:gap-16 ${index % 2 === 0 ? '' : 'lg:flex-row-reverse'}`}>
+                {/* Content side */}
+                <div className="flex-1 text-center lg:text-left">
+                  <div className="inline-flex items-center gap-3 mb-4">
+                    <span className="text-sm font-bold text-muted-foreground bg-muted px-3 py-1 rounded-full">
+                      Step {index + 1}
+                    </span>
+                  </div>
+                  
+                  <h3 className="text-3xl lg:text-4xl font-bold mb-4 text-foreground">
+                    {step.title}
+                  </h3>
+                  
+                  <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed max-w-md mx-auto lg:mx-0">
+                    {step.description}
+                  </p>
+                </div>
+                
+                {/* Icon side */}
+                <div className="flex-1 flex justify-center">
+                  <div className="relative">
+                    {/* Large gradient circle */}
+                    <div className={`w-32 h-32 lg:w-40 lg:h-40 rounded-full bg-gradient-to-br ${step.color} shadow-2xl flex items-center justify-center relative overflow-hidden`}>
+                      <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent"></div>
+                      <step.icon className="h-16 w-16 lg:h-20 lg:w-20 text-white relative z-10" />
+                    </div>
+                    
+                    {/* Floating elements */}
+                    <div className={`absolute -top-2 -right-2 w-8 h-8 rounded-full bg-gradient-to-br ${step.color} opacity-60 animate-pulse`}></div>
+                    <div className={`absolute -bottom-3 -left-3 w-6 h-6 rounded-full bg-gradient-to-br ${step.color} opacity-40 animate-pulse delay-300`}></div>
+                  </div>
+                </div>
               </div>
-              <h3 className="text-xl font-bold mb-2">Slack</h3>
-              <p className="text-muted-foreground">
-                Receive instant alerts in your Slack channels for new unanswered questions.
-              </p>
+              
+              {/* Arrow connector (except for last item) */}
+              {index < steps.length - 1 && (
+                <div className="flex justify-center mt-8 lg:mt-12">
+                  <div className="bg-gradient-to-b from-forumscout-purple to-forumscout-accent-blue p-3 rounded-full shadow-lg">
+                    <ArrowDown className="h-6 w-6 text-white animate-bounce" />
+                  </div>
+                </div>
+              )}
             </div>
-            <div className="bg-card border rounded-xl p-6 transition-all hover:shadow-md">
-              <div className="bg-primary/10 p-3 rounded-full w-fit mb-4">
-                <Bell className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="text-xl font-bold mb-2">Email</h3>
-              <p className="text-muted-foreground">
-                Get notified via email when new unanswered questions are detected in your forums.
-              </p>
-            </div>
-            <div className="bg-card border rounded-xl p-6 transition-all hover:shadow-md">
-              <div className="bg-primary/10 p-3 rounded-full w-fit mb-4">
-                <BarChart3 className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="text-xl font-bold mb-2">Microsoft Teams</h3>
-              <p className="text-muted-foreground">
-                Stay updated with forum activity directly in your Microsoft Teams workspace.
-              </p>
-            </div>
-            <div className="bg-card border rounded-xl p-6 transition-all hover:shadow-md">
-              <div className="bg-primary/10 p-3 rounded-full w-fit mb-4">
-                <Settings className="h-6 w-6 text-primary" />
-              </div>
-              <h3 className="text-xl font-bold mb-2">Zapier</h3>
-              <p className="text-muted-foreground">
-                Connect Threadwise with thousands of other apps using Zapier for custom workflows.
-              </p>
-            </div>
+          ))}
+        </div>
+        
+        {/* Bottom CTA */}
+        <div className="text-center mt-20">
+          <div className="bg-gradient-to-r from-forumscout-purple/10 to-forumscout-accent-blue/10 border border-forumscout-purple/20 rounded-2xl p-8 max-w-2xl mx-auto">
+            <h3 className="text-2xl font-bold mb-4 text-foreground">
+              Ready to see it in action?
+            </h3>
+            <p className="text-muted-foreground mb-6">
+              Experience the power of intelligent forum engagement firsthand.
+            </p>
+            <button className="bg-gradient-to-r from-forumscout-purple to-forumscout-accent-blue text-white px-8 py-3 rounded-full font-semibold hover:shadow-lg transition-all duration-300 hover:scale-105">
+              Watch Demo
+            </button>
           </div>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }; 

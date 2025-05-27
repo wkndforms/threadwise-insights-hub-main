@@ -1,6 +1,10 @@
 import { HeroSection } from "@/components/home/HeroSection";
+import { ProblemSection } from "@/components/home/ProblemSection";
 import { FeaturesSection } from "@/components/home/FeaturesSection";
-import { HowItWorksSection } from "@/components/home/HowItWorksSection";
+import { QuickDemoSection } from "@/components/home/QuickDemoSection";
+import { ResultsSection } from "@/components/home/ResultsSection";
+import { PricingSection } from "@/components/home/PricingSection";
+import { ImplementationTimelineSection } from "@/components/home/ImplementationTimelineSection";
 import { FAQSection } from "@/components/home/FAQSection";
 import { CtaSection } from "@/components/home/CtaSection";
 import { LeadCaptureForm } from "@/components/lead-capture/LeadCaptureForm";
@@ -12,12 +16,18 @@ export default function Home() {
   return (
     <>
       <HeroSection openLeadForm={openLeadForm} />
+      <ProblemSection />
       <section id="features">
         <FeaturesSection />
       </section>
-      <section id="how-it-works">
-        <HowItWorksSection />
+      <section id="demo">
+        <QuickDemoSection openLeadForm={openLeadForm} />
       </section>
+      <ResultsSection />
+      <section id="pricing">
+        <PricingSection openLeadForm={openLeadForm} />
+      </section>
+      <ImplementationTimelineSection />
       <section id="faq">
         <FAQSection />
       </section>

@@ -346,22 +346,22 @@ export default function ForumConfig() {
                           </FormItem>
                         )}
                       />
-                      <FormField
-                        control={form.control}
-                        name="emailRecipients"
-                        render={({ field }) => (
+                        <FormField
+                          control={form.control}
+                          name="emailRecipients"
+                          render={({ field }) => (
                           <FormItem className={form.getValues("notifyEmail") ? "" : "hidden"}>
-                            <FormLabel>Email Recipients</FormLabel>
-                            <FormControl>
+                              <FormLabel>Email Recipients</FormLabel>
+                              <FormControl>
                               <Input placeholder="team@example.com, support@example.com" {...field} />
-                            </FormControl>
-                            <FormDescription>
+                              </FormControl>
+                              <FormDescription>
                               Comma-separated list of email addresses.
-                            </FormDescription>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                              </FormDescription>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
                     </div>
 
                     <Separator />
@@ -389,22 +389,22 @@ export default function ForumConfig() {
                           </FormItem>
                         )}
                       />
-                      <FormField
-                        control={form.control}
-                        name="slackChannel"
-                        render={({ field }) => (
+                        <FormField
+                          control={form.control}
+                          name="slackChannel"
+                          render={({ field }) => (
                           <FormItem className={form.getValues("notifySlack") ? "" : "hidden"}>
-                            <FormLabel>Slack Channel</FormLabel>
-                            <FormControl>
-                              <Input placeholder="#support-alerts" {...field} />
-                            </FormControl>
-                            <FormDescription>
+                              <FormLabel>Slack Channel</FormLabel>
+                              <FormControl>
+                                <Input placeholder="#support-alerts" {...field} />
+                              </FormControl>
+                              <FormDescription>
                               The Slack channel to send notifications to.
-                            </FormDescription>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                              </FormDescription>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
                     </div>
 
                     <Separator />
@@ -432,22 +432,22 @@ export default function ForumConfig() {
                           </FormItem>
                         )}
                       />
-                      <FormField
-                        control={form.control}
-                        name="teamsWebhook"
-                        render={({ field }) => (
+                        <FormField
+                          control={form.control}
+                          name="teamsWebhook"
+                          render={({ field }) => (
                           <FormItem className={form.getValues("notifyTeams") ? "" : "hidden"}>
-                            <FormLabel>Teams Webhook URL</FormLabel>
-                            <FormControl>
-                              <Input placeholder="https://outlook.office.com/webhook/..." {...field} />
-                            </FormControl>
-                            <FormDescription>
+                              <FormLabel>Teams Webhook URL</FormLabel>
+                              <FormControl>
+                                <Input placeholder="https://outlook.office.com/webhook/..." {...field} />
+                              </FormControl>
+                              <FormDescription>
                               The Microsoft Teams incoming webhook URL.
-                            </FormDescription>
-                            <FormMessage />
-                          </FormItem>
-                        )}
-                      />
+                              </FormDescription>
+                              <FormMessage />
+                            </FormItem>
+                          )}
+                        />
                     </div>
 
                     <Button type="button" onClick={() => toast.success("Notification settings saved")} className="w-full bg-gradient-to-r from-forumscout-purple to-forumscout-purple-dark hover:opacity-90">
