@@ -6,19 +6,16 @@ import { LeadCaptureForm } from "../lead-capture/LeadCaptureForm";
 import { useLeadCapture } from "@/hooks/use-lead-capture";
 import { Link } from "react-router-dom";
 
-// Updated nav items for SPA scroll and lead form triggers
+// Updated nav items for most customer-relevant sections
 const scrollNavItems = [
   { label: "Features", path: "/#features" },
-  { label: "How It Works", path: "/#how-it-works" },
+  { label: "Demo", path: "/#demo" },
+  { label: "Pricing", path: "/#pricing" },
   { label: "FAQ", path: "/#faq" },
 ];
 
 const leadFormNavItems = [
-  // { label: "Blog", source: "navbar-blog" }, // Removed
-  // { label: "Changelog", source: "navbar-changelog" }, // Removed
-  // { label: "Documentation", source: "navbar-documentation" }, // Removed
-  // { label: "Docs", source: "navbar-docs" }, // Removed
-  // { label: "API", source: "navbar-api" }, // Removed
+  // Removed all blog/docs items to focus on core customer journey
 ];
 
 export const MarketingNavbar = () => {
@@ -42,7 +39,7 @@ export const MarketingNavbar = () => {
         <div className="flex h-16 items-center justify-between">
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-2">
-              <span className="text-2xl font-bold bg-gradient-to-r from-forumscout-purple to-forumscout-purple-dark inline-block text-transparent bg-clip-text">
+              <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 inline-block text-transparent bg-clip-text">
                 ForumScout
               </span>
             </Link>
@@ -77,7 +74,7 @@ export const MarketingNavbar = () => {
                   {item.label}
                 </a>
               ))}
-              {/* Original Contact link - already opens lead form */}
+              {/* Contact link */}
               <a
                 href="#"
                 className="px-3 py-2 text-sm font-medium rounded-md hover:bg-accent hover:text-accent-foreground transition-colors"
@@ -93,8 +90,8 @@ export const MarketingNavbar = () => {
 
           <div className="hidden md:flex items-center space-x-4">
             <ThemeToggle />
-            <Button
-              className="bg-gradient-to-r from-forumscout-purple to-forumscout-purple-dark hover:opacity-90"
+            <Button 
+              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
               onClick={() => openLeadForm('navbar-free-trial-desktop')}
             >
               Start Free Trial
@@ -149,7 +146,7 @@ export const MarketingNavbar = () => {
                 {item.label}
               </a>
             ))}
-            {/* Original Contact link for mobile - already opens lead form */}
+            {/* Contact link for mobile */}
             <a
               href="#"
               className="block px-3 py-2 rounded-md text-base font-medium hover:bg-accent hover:text-accent-foreground"
@@ -162,8 +159,8 @@ export const MarketingNavbar = () => {
             </a>
             <div className="pt-4 pb-3 border-t border-border">
               <div className="space-y-2 px-3">
-                <Button
-                  className="w-full justify-center bg-gradient-to-r from-forumscout-purple to-forumscout-purple-dark hover:opacity-90"
+                <Button 
+                  className="w-full justify-center bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
                   onClick={() => openLeadForm('navbar-free-trial-mobile')}
                 >
                   Start Free Trial
@@ -175,8 +172,8 @@ export const MarketingNavbar = () => {
       )}
 
       {/* Lead Capture Form */}
-      <LeadCaptureForm
-        isOpen={isLeadFormOpen}
+      <LeadCaptureForm 
+        isOpen={isLeadFormOpen} 
         setIsOpen={setIsLeadFormOpen}
         source={leadSource}
       />
