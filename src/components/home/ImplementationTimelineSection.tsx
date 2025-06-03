@@ -1,6 +1,11 @@
-import { Clock, CheckCircle, Rocket, Users, Settings, BarChart3 } from "lucide-react";
+import { Clock, CheckCircle, Rocket, Users, Settings, BarChart3, ArrowRight, Shield } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
-export const ImplementationTimelineSection = () => {
+interface ImplementationTimelineSectionProps {
+  openLeadForm?: (source: string) => void;
+}
+
+export const ImplementationTimelineSection = ({ openLeadForm }: ImplementationTimelineSectionProps) => {
   const timelineSteps = [
     {
       day: "Day 1",
@@ -10,7 +15,7 @@ export const ImplementationTimelineSection = () => {
       duration: "2 hours",
       yourPart: "Provide forum URLs and team contacts",
       ourPart: "Configure AI models and integrations",
-      color: "from-blue-500 to-cyan-500"
+      color: "trupeer-purple"
     },
     {
       day: "Day 2-3",
@@ -20,7 +25,7 @@ export const ImplementationTimelineSection = () => {
       duration: "1 day",
       yourPart: "Attend 30-min training session",
       ourPart: "Custom workflow setup and team training",
-      color: "from-purple-500 to-pink-500"
+      color: "trupeer-blue"
     },
     {
       day: "Day 4-7",
@@ -30,7 +35,7 @@ export const ImplementationTimelineSection = () => {
       duration: "Immediate",
       yourPart: "Respond to nudges in Slack/Teams",
       ourPart: "24/7 monitoring and intelligent routing",
-      color: "from-green-500 to-emerald-500"
+      color: "trupeer-green"
     },
     {
       day: "Day 14",
@@ -40,7 +45,7 @@ export const ImplementationTimelineSection = () => {
       duration: "Ongoing",
       yourPart: "Review analytics and feedback",
       ourPart: "Optimization and performance reports",
-      color: "from-orange-500 to-red-500"
+      color: "trupeer-purple"
     }
   ];
 
@@ -56,92 +61,117 @@ export const ImplementationTimelineSection = () => {
       description: "Measurable improvement in response times"
     },
     {
-      icon: Rocket,
-      title: "Zero Downtime",
-      description: "No disruption to your existing forums"
+      icon: Shield,
+      title: "Zero Risk",
+      description: "30-day money-back guarantee"
     }
   ];
 
   return (
-    <section className="py-12 md:py-24 bg-gradient-to-br from-green-50/30 via-background to-blue-50/20 relative overflow-hidden">
-      {/* Background elements */}
-      <div className="absolute top-20 left-10 w-72 h-72 bg-green-500/5 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-500/5 rounded-full blur-3xl"></div>
-      
-      <div className="container px-4 md:px-6 mx-auto relative">
-        <div className="text-center max-w-4xl mx-auto mb-8 md:mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 md:px-6 md:py-3 rounded-full bg-green-100/80 border border-green-200/50 mb-4 md:mb-6">
-            <Clock className="h-4 w-4 md:h-5 md:w-5 text-green-600" />
-            <span className="text-green-700 font-semibold text-sm md:text-lg">Implementation Timeline</span>
+    <section className="py-16 md:py-24 bg-gradient-to-b from-white to-trupeer-gray-50/50">
+      <div className="container px-4 md:px-6 mx-auto">
+        
+        {/* Section Header */}
+        <div className="text-center max-w-4xl mx-auto mb-16 space-y-6">
+          <div className="inline-flex items-center gap-2 rounded-full bg-trupeer-green-100 border border-trupeer-green-200 px-4 py-2 text-sm font-medium text-trupeer-green-800">
+            <Clock className="h-4 w-4 fill-current" />
+            Implementation Timeline
           </div>
           
-          <h2 className="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight mb-4 md:mb-6 leading-tight">
-            <span className="bg-gradient-to-r from-green-600 via-blue-600 to-green-600 text-transparent bg-clip-text">
+          <h2 className="text-3xl md:text-5xl font-bold text-gray-900 tracking-tight leading-tight">
+            <span className="bg-gradient-to-r from-trupeer-purple-600 to-trupeer-blue-600 bg-clip-text text-transparent">
               From Setup to Success
             </span>
             <br />
-            <span className="text-foreground">In Just 2 Weeks</span>
+            <span className="text-gray-900">In Just 2 Weeks</span>
           </h2>
           
-          <p className="text-base md:text-xl lg:text-2xl text-muted-foreground leading-relaxed px-2">
+          <p className="text-xl text-trupeer-gray-600 leading-relaxed">
             See results faster than you thought possible. 
-            <br className="hidden md:block" />
-            <span className="font-bold text-green-600">Most teams see 50%+ improvement</span> in the first week.
+            <span className="font-semibold text-trupeer-green-600"> Most teams see 50%+ improvement</span> in the first week.
           </p>
         </div>
 
-        {/* Timeline */}
-        <div className="max-w-6xl mx-auto mb-12 md:mb-16">
-          <div className="grid gap-6 md:gap-8 lg:gap-12">
+        {/* Timeline Steps */}
+        <div className="max-w-6xl mx-auto mb-16">
+          <div className="grid gap-12 lg:gap-16">
             {timelineSteps.map((step, index) => (
-              <div key={index} className="relative">
-                {/* Connecting line (except for last item) */}
-                {index < timelineSteps.length - 1 && (
-                  <div className="hidden md:block absolute left-1/2 top-32 transform -translate-x-1/2 w-0.5 h-16 bg-gradient-to-b from-muted-foreground/30 to-transparent"></div>
-                )}
+              <div key={index} className={`grid lg:grid-cols-2 gap-8 lg:gap-16 items-center ${
+                index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''
+              }`}>
                 
-                <div className={`flex flex-col md:flex-row items-center gap-6 md:gap-8 lg:gap-12 ${index % 2 === 1 ? 'md:flex-row-reverse' : ''}`}>
-                  {/* Content */}
-                  <div className="flex-1 text-center md:text-left">
-                    <div className="inline-flex items-center gap-2 bg-muted px-3 py-1 rounded-full text-sm font-medium mb-3 md:mb-4">
-                      <Clock className="h-4 w-4" />
-                      {step.day}
+                {/* Content */}
+                <div className={`space-y-6 ${index % 2 === 1 ? 'lg:col-start-2' : ''}`}>
+                  <div className="flex items-center gap-4">
+                    <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br from-${step.color}-500 to-${step.color}-600 flex items-center justify-center shadow-lg`}>
+                      <step.icon className="h-8 w-8 text-white" />
                     </div>
-                    
-                    <h3 className="text-xl md:text-3xl font-bold mb-3 md:mb-4 text-foreground leading-tight">
-                      {step.title}
-                    </h3>
-                    
-                    <p className="text-base md:text-lg text-muted-foreground mb-4 md:mb-6 leading-relaxed">
-                      {step.description}
-                    </p>
-                    
-                    <div className="grid gap-3 md:grid-cols-2 md:gap-4">
-                      <div className="bg-blue-50/50 border border-blue-200/50 rounded-xl p-3 md:p-4">
-                        <h4 className="font-semibold text-blue-700 mb-2 text-sm md:text-base">Your Part:</h4>
-                        <p className="text-xs md:text-sm text-blue-600">{step.yourPart}</p>
-                      </div>
-                      
-                      <div className="bg-green-50/50 border border-green-200/50 rounded-xl p-3 md:p-4">
-                        <h4 className="font-semibold text-green-700 mb-2 text-sm md:text-base">We Handle:</h4>
-                        <p className="text-xs md:text-sm text-green-600">{step.ourPart}</p>
-                      </div>
+                    <div className="bg-trupeer-gray-100 px-3 py-1 rounded-full text-sm font-medium text-trupeer-gray-700">
+                      {step.day} • {step.duration}
                     </div>
                   </div>
                   
-                  {/* Visual */}
-                  <div className="flex-1 flex justify-center">
-                    <div className="relative">
-                      <div className={`w-24 h-24 md:w-32 md:h-32 lg:w-40 lg:h-40 rounded-2xl md:rounded-3xl bg-gradient-to-br ${step.color} shadow-2xl flex items-center justify-center relative overflow-hidden group hover:scale-110 transition-transform duration-300`}>
-                        <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent"></div>
-                        <step.icon className="h-12 w-12 md:h-16 md:w-16 lg:h-20 lg:w-20 text-white relative z-10" />
+                  <div className="space-y-4">
+                    <h3 className="text-2xl md:text-3xl font-bold text-gray-900">
+                      {step.title}
+                    </h3>
+                    <p className="text-lg text-trupeer-gray-600 leading-relaxed">
+                      {step.description}
+                    </p>
+                  </div>
+                  
+                  {/* Responsibility Cards */}
+                  <div className="grid gap-4 md:grid-cols-2">
+                    <div className="bg-trupeer-blue-50 border border-trupeer-blue-200 rounded-xl p-4">
+                      <h4 className="font-semibold text-trupeer-blue-700 mb-2">Your Part:</h4>
+                      <p className="text-sm text-trupeer-blue-600">{step.yourPart}</p>
+                    </div>
+                    
+                    <div className="bg-trupeer-green-50 border border-trupeer-green-200 rounded-xl p-4">
+                      <h4 className="font-semibold text-trupeer-green-700 mb-2">We Handle:</h4>
+                      <p className="text-sm text-trupeer-green-600">{step.ourPart}</p>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Visual Element */}
+                <div className={`${index % 2 === 1 ? 'lg:col-start-1' : ''}`}>
+                  <div className="relative">
+                    <div className="rounded-2xl overflow-hidden shadow-xl bg-white border border-trupeer-gray-200">
+                      {/* Mockup header */}
+                      <div className="bg-trupeer-gray-50 px-4 py-3 border-b border-trupeer-gray-200 flex items-center gap-2">
+                        <div className="flex gap-2">
+                          <div className="w-2 h-2 bg-red-400 rounded-full"></div>
+                          <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+                          <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                        </div>
+                        <div className="flex-1 text-center">
+                          <div className="text-xs text-trupeer-gray-500">
+                            {step.day}
+                          </div>
+                        </div>
                       </div>
                       
-                      {/* Duration badge */}
-                      <div className="absolute -bottom-2 md:-bottom-3 left-1/2 transform -translate-x-1/2 bg-card border border-muted-foreground/20 px-2 py-1 md:px-3 rounded-full text-xs md:text-sm font-medium shadow-lg">
-                        {step.duration}
+                      {/* Content area */}
+                      <div className="aspect-[4/3] bg-gradient-to-br from-white to-trupeer-gray-50 flex items-center justify-center p-8">
+                        <div className="text-center space-y-4">
+                          <div className={`w-16 h-16 bg-gradient-to-r from-${step.color}-500 to-${step.color}-600 rounded-xl mx-auto flex items-center justify-center`}>
+                            <step.icon className="h-8 w-8 text-white" />
+                          </div>
+                          <div className="space-y-2">
+                            <h4 className="text-lg font-semibold text-trupeer-gray-800">
+                              {step.title}
+                            </h4>
+                            <p className="text-sm text-trupeer-gray-600 max-w-xs">
+                              Implementation step {index + 1} screenshot
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     </div>
+                    
+                    {/* Decorative glow */}
+                    <div className={`absolute -inset-4 bg-gradient-to-r from-${step.color}-500/10 to-${step.color}-600/10 rounded-3xl -z-10 blur-xl`}></div>
                   </div>
                 </div>
               </div>
@@ -149,40 +179,58 @@ export const ImplementationTimelineSection = () => {
           </div>
         </div>
 
-        {/* Guarantees */}
+        {/* Guarantees Section */}
         <div className="max-w-5xl mx-auto">
-          <div className="bg-gradient-to-br from-slate-50 to-slate-100/50 border border-slate-200/50 rounded-2xl md:rounded-3xl p-6 md:p-8 lg:p-12">
-            <h3 className="text-xl md:text-3xl font-bold text-center mb-8 md:mb-12 text-foreground leading-tight">
-              Our Implementation Guarantees
-            </h3>
+          <div className="bg-white border border-trupeer-gray-200 rounded-2xl p-8 lg:p-12 shadow-sm">
+            <div className="text-center mb-12">
+              <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+                Our Implementation Guarantees
+              </h3>
+              <p className="text-trupeer-gray-600">
+                We're so confident in our process, we guarantee your success
+              </p>
+            </div>
             
-            <div className="grid gap-6 md:grid-cols-3 md:gap-8">
+            <div className="grid gap-8 md:grid-cols-3 mb-12">
               {guarantees.map((guarantee, index) => (
-                <div key={index} className="text-center group">
-                  <div className="inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-gradient-to-br from-green-500 to-emerald-500 shadow-xl mb-4 md:mb-6 group-hover:scale-110 transition-transform duration-300">
-                    <guarantee.icon className="h-6 w-6 md:h-8 md:w-8 text-white" />
+                <div key={index} className="text-center">
+                  <div className="w-16 h-16 bg-gradient-to-br from-trupeer-green-500 to-trupeer-green-600 rounded-xl mx-auto mb-6 flex items-center justify-center shadow-lg">
+                    <guarantee.icon className="h-8 w-8 text-white" />
                   </div>
                   
-                  <h4 className="text-lg md:text-xl font-bold mb-2 md:mb-3 text-foreground leading-tight">
+                  <h4 className="text-xl font-bold text-gray-900 mb-3">
                     {guarantee.title}
                   </h4>
                   
-                  <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+                  <p className="text-trupeer-gray-600 leading-relaxed">
                     {guarantee.description}
                   </p>
                 </div>
               ))}
             </div>
             
-            <div className="text-center mt-8 md:mt-12">
-              <div className="bg-green-100/80 border border-green-200/50 rounded-xl md:rounded-2xl p-4 md:p-6 max-w-2xl mx-auto">
-                <h4 className="text-base md:text-lg font-bold text-green-800 mb-2">
+            {/* Money-back guarantee */}
+            <div className="text-center">
+              <div className="bg-trupeer-green-50 border border-trupeer-green-200 rounded-xl p-6 max-w-2xl mx-auto mb-8">
+                <h4 className="text-lg font-bold text-trupeer-green-800 mb-2">
                   Not seeing results in 14 days?
                 </h4>
-                <p className="text-sm md:text-base text-green-700 leading-relaxed">
+                <p className="text-trupeer-green-700">
                   We'll work with you until you do, or provide a full refund. That's our promise.
                 </p>
               </div>
+              
+              {/* CTA */}
+              {openLeadForm && (
+                <Button
+                  size="lg"
+                  className="bg-gradient-to-r from-trupeer-purple-600 to-trupeer-blue-600 hover:from-trupeer-purple-700 hover:to-trupeer-blue-700 text-white font-semibold px-8 py-4"
+                  onClick={() => openLeadForm("implementation-timeline-cta")}
+                >
+                  Start your implementation today
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              )}
             </div>
           </div>
         </div>

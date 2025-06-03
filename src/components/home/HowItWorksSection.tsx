@@ -1,121 +1,175 @@
-import { Search, Brain, Target, Bell, BarChart3, ArrowDown, CheckCircle } from "lucide-react";
+import { Monitor, Brain, Zap, ArrowRight, Play } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
-export const HowItWorksSection = () => {
+interface HowItWorksSectionProps {
+  openLeadForm: (source: string) => void;
+}
+
+export const HowItWorksSection = ({ openLeadForm }: HowItWorksSectionProps) => {
   const steps = [
     {
-      icon: Search,
-      title: "Identify",
-      description: "Forum Scout monitors your community for unanswered questions.",
-      color: "from-blue-500 to-cyan-500"
+      number: "1",
+      title: "Connect",
+      subtitle: "Link your community platforms in seconds",
+      description: "Connect Reddit, Discord, forums, and support channels. Our AI starts monitoring instantly.",
+      icon: Monitor,
+      color: "trupeer-purple",
+      mockup: "Platform connection interface"
     },
     {
-      icon: Brain,
+      number: "2", 
       title: "Analyze",
-      description: "Advanced LLMs dissect question content, topic, and sentiment.",
-      color: "from-purple-500 to-violet-500"
+      subtitle: "AI identifies questions and expert matches",
+      description: "Smart algorithms categorize questions and match them to your internal experts automatically.",
+      icon: Brain,
+      color: "trupeer-blue", 
+      mockup: "AI analysis dashboard"
     },
     {
-      icon: Target,
+      number: "3",
       title: "Route",
-      description: "Intelligently matches questions to the most relevant internal experts or teams.",
-      color: "from-green-500 to-emerald-500"
-    },
-    {
-      icon: Bell,
-      title: "Notify",
-      description: "Delivers targeted, actionable 'nudges' in your team's preferred communication channels (e.g., Slack).",
-      color: "from-orange-500 to-red-500"
-    },
-    {
-      icon: BarChart3,
-      title: "Track",
-      description: "Monitor response rates, resolution times, and engagement trends.",
-      color: "from-pink-500 to-rose-500"
+      subtitle: "Experts get notified and respond fast",
+      description: "Your team gets targeted alerts with context. Questions get answered, engagement soars.",
+      icon: Zap,
+      color: "trupeer-green",
+      mockup: "Notification and response flow"
     }
   ];
 
   return (
-    <section id="how-it-works" className="py-24 bg-gradient-to-b from-background to-muted/30 relative">
+    <section className="py-16 md:py-24 bg-gradient-to-b from-white to-trupeer-gray-50/50">
       <div className="container px-4 md:px-6 mx-auto">
-        <div className="text-center max-w-4xl mx-auto mb-20">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-forumscout-accent-green/10 text-forumscout-accent-green text-sm font-medium mb-6">
-            <CheckCircle className="h-4 w-4" />
-            How It Works
-          </div>
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6">
-            Simple Setup, <span className="bg-gradient-to-r from-forumscout-purple to-forumscout-accent-blue text-transparent bg-clip-text">Powerful Results</span>
+        
+        {/* Section Header */}
+        <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
+          <h2 className="text-3xl md:text-5xl font-bold text-gray-900 tracking-tight">
+            How Forum Scout works
           </h2>
-          <p className="text-xl text-muted-foreground leading-relaxed">
-            Forum Scout transforms your forum engagement with an intelligent, automated process that feels natural to your team.
+          <p className="text-xl text-trupeer-gray-600 leading-relaxed">
+            Picture perfect forum monitoring in <span className="font-semibold text-trupeer-purple-600">1, 2 & 3</span>
           </p>
         </div>
-        
-        {/* Timeline Design */}
-        <div className="relative max-w-4xl mx-auto">
-          {/* Vertical connecting line */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-forumscout-purple via-forumscout-accent-blue to-forumscout-accent-green rounded-full opacity-30 hidden lg:block"></div>
-          
+
+        {/* Steps */}
+        <div className="grid gap-12 lg:gap-20">
           {steps.map((step, index) => (
-            <div key={index} className="relative mb-16 lg:mb-24">
-              {/* Step content */}
-              <div className={`flex flex-col lg:flex-row items-center gap-8 lg:gap-16 ${index % 2 === 0 ? '' : 'lg:flex-row-reverse'}`}>
-                {/* Content side */}
-                <div className="flex-1 text-center lg:text-left">
-                  <div className="inline-flex items-center gap-3 mb-4">
-                    <span className="text-sm font-bold text-muted-foreground bg-muted px-3 py-1 rounded-full">
-                      Step {index + 1}
-                    </span>
+            <div 
+              key={step.number}
+              className={`grid lg:grid-cols-2 gap-8 lg:gap-16 items-center ${
+                index % 2 === 1 ? 'lg:grid-flow-col-dense' : ''
+              }`}
+            >
+              {/* Content */}
+              <div className={`space-y-6 ${index % 2 === 1 ? 'lg:col-start-2' : ''}`}>
+                <div className="flex items-center gap-4">
+                  <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br from-${step.color}-500 to-${step.color}-600 flex items-center justify-center shadow-lg`}>
+                    <step.icon className="h-8 w-8 text-white" />
+                  </div>
+                  <div className={`text-6xl font-bold text-${step.color}-500 opacity-20`}>
+                    {step.number}
+                  </div>
+                </div>
+                
+                <div className="space-y-4">
+                  <div>
+                    <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
+                      {step.title}
+                    </h3>
+                    <p className="text-lg text-trupeer-gray-600 font-medium">
+                      {step.subtitle}
+                    </p>
                   </div>
                   
-                  <h3 className="text-3xl lg:text-4xl font-bold mb-4 text-foreground">
-                    {step.title}
-                  </h3>
-                  
-                  <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed max-w-md mx-auto lg:mx-0">
+                  <p className="text-trupeer-gray-600 leading-relaxed text-lg">
                     {step.description}
                   </p>
                 </div>
-                
-                {/* Icon side */}
-                <div className="flex-1 flex justify-center">
-                  <div className="relative">
-                    {/* Large gradient circle */}
-                    <div className={`w-32 h-32 lg:w-40 lg:h-40 rounded-full bg-gradient-to-br ${step.color} shadow-2xl flex items-center justify-center relative overflow-hidden`}>
-                      <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent"></div>
-                      <step.icon className="h-16 w-16 lg:h-20 lg:w-20 text-white relative z-10" />
+
+                {index === steps.length - 1 && (
+                  <div className="pt-4">
+                    <Button
+                      size="lg"
+                      className="bg-gradient-to-r from-trupeer-purple-600 to-trupeer-blue-600 hover:from-trupeer-purple-700 hover:to-trupeer-blue-700 text-white font-semibold px-6 py-3"
+                      onClick={() => openLeadForm("how-it-works-cta")}
+                    >
+                      Get started now
+                      <ArrowRight className="ml-2 h-4 w-4" />
+                    </Button>
+                  </div>
+                )}
+              </div>
+
+              {/* Visual/Mockup */}
+              <div className={`${index % 2 === 1 ? 'lg:col-start-1' : ''}`}>
+                <div className="relative">
+                  <div className="rounded-2xl overflow-hidden shadow-xl bg-white border border-trupeer-gray-200">
+                    {/* Mockup header */}
+                    <div className="bg-trupeer-gray-50 px-4 py-3 border-b border-trupeer-gray-200 flex items-center gap-2">
+                      <div className="flex gap-2">
+                        <div className="w-2 h-2 bg-red-400 rounded-full"></div>
+                        <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+                        <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                      </div>
+                      <div className="flex-1 text-center">
+                        <div className="text-xs text-trupeer-gray-500">
+                          Step {step.number}
+                        </div>
+                      </div>
                     </div>
                     
-                    {/* Floating elements */}
-                    <div className={`absolute -top-2 -right-2 w-8 h-8 rounded-full bg-gradient-to-br ${step.color} opacity-60 animate-pulse`}></div>
-                    <div className={`absolute -bottom-3 -left-3 w-6 h-6 rounded-full bg-gradient-to-br ${step.color} opacity-40 animate-pulse delay-300`}></div>
+                    {/* Placeholder content */}
+                    <div className="aspect-[4/3] bg-gradient-to-br from-white to-trupeer-gray-50 flex items-center justify-center p-8">
+                      <div className="text-center space-y-4">
+                        <div className={`w-12 h-12 bg-gradient-to-r from-${step.color}-500 to-${step.color}-600 rounded-lg mx-auto flex items-center justify-center`}>
+                          <step.icon className="h-6 w-6 text-white" />
+                        </div>
+                        <div className="space-y-2">
+                          <h4 className="font-semibold text-trupeer-gray-800">
+                            Screenshot Needed
+                          </h4>
+                          <p className="text-sm text-trupeer-gray-600 max-w-xs">
+                            {step.mockup}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
                   </div>
+                  
+                  {/* Decorative elements */}
+                  <div className={`absolute -inset-4 bg-gradient-to-r from-${step.color}-500/10 to-${step.color}-600/10 rounded-3xl -z-10 blur-xl`}></div>
                 </div>
               </div>
-              
-              {/* Arrow connector (except for last item) */}
-              {index < steps.length - 1 && (
-                <div className="flex justify-center mt-8 lg:mt-12">
-                  <div className="bg-gradient-to-b from-forumscout-purple to-forumscout-accent-blue p-3 rounded-full shadow-lg">
-                    <ArrowDown className="h-6 w-6 text-white animate-bounce" />
-                  </div>
-                </div>
-              )}
             </div>
           ))}
         </div>
-        
+
         {/* Bottom CTA */}
-        <div className="text-center mt-20">
-          <div className="bg-gradient-to-r from-forumscout-purple/10 to-forumscout-accent-blue/10 border border-forumscout-purple/20 rounded-2xl p-8 max-w-2xl mx-auto">
-            <h3 className="text-2xl font-bold mb-4 text-foreground">
-              Ready to see it in action?
-            </h3>
-            <p className="text-muted-foreground mb-6">
-              Experience the power of intelligent forum engagement firsthand.
+        <div className="text-center mt-16 pt-12 border-t border-trupeer-gray-200">
+          <div className="space-y-4">
+            <p className="text-trupeer-gray-600">
+              Ready to transform your community engagement?
             </p>
-            <button className="bg-gradient-to-r from-forumscout-purple to-forumscout-accent-blue text-white px-8 py-3 rounded-full font-semibold hover:shadow-lg transition-all duration-300 hover:scale-105">
-              Watch Demo
-            </button>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button
+                size="lg"
+                className="bg-gradient-to-r from-trupeer-purple-600 to-trupeer-blue-600 hover:from-trupeer-purple-700 hover:to-trupeer-blue-700 text-white font-semibold px-8 py-3"
+                onClick={() => openLeadForm("how-it-works-bottom-cta")}
+              >
+                Start free trial
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Button>
+              <Button 
+                size="lg" 
+                variant="outline"
+                className="border-2 border-trupeer-gray-300 text-trupeer-gray-700 hover:bg-trupeer-gray-50 font-semibold px-8 py-3"
+                asChild
+              >
+                <a href="/#demo" className="inline-flex items-center">
+                  <Play className="mr-2 h-4 w-4" />
+                  Watch demo
+                </a>
+              </Button>
+            </div>
           </div>
         </div>
       </div>

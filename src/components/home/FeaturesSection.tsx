@@ -1,4 +1,5 @@
-import { Brain, Target, Zap, BarChart3, Users, Lightbulb, ArrowRight, Sparkles } from "lucide-react";
+import { Brain, Target, Zap, BarChart3, Users, Shield, MessageSquare, TrendingUp, ArrowRight, CheckCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 // Custom SVG icon components
 const CustomReportsIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -45,141 +46,140 @@ interface FeaturesSectionProps {
 }
 
 export const FeaturesSection = ({ isMobile = false }: FeaturesSectionProps) => {
-  const primaryFeatures = [
+  const features = [
     {
       icon: Brain,
-      title: "Smart Routing",
-      description: "Leverages LLM models to analyze question content and identify the right internal expert.",
-      color: "from-blue-500 to-cyan-500"
+      title: "AI-Powered Question Analysis",
+      description: "Advanced AI analyzes question content, context, and sentiment to understand exactly what your community needs.",
+      benefits: ["Automatic categorization", "Intent recognition", "Priority scoring"],
+      color: "trupeer-purple"
     },
     {
       icon: Target,
-      title: "Effective Nudges",
-      description: "Delivers clear, actionable notifications directly into existing workflows (Slack, Teams).",
-      color: "from-purple-500 to-pink-500"
+      title: "Smart Expert Matching",
+      description: "Intelligently routes questions to the perfect team member based on expertise, availability, and past performance.",
+      benefits: ["Expert skill mapping", "Load balancing", "Response tracking"],
+      color: "trupeer-blue"
     },
     {
       icon: Zap,
-      title: "Sustained Engagement",
-      description: "Ensures consistent visibility and accountability, making forum support an ingrained habit.",
-      color: "from-orange-500 to-red-500"
-    }
-  ];
-
-  const secondaryFeatures = [
+      title: "Instant Notifications",
+      description: "Get targeted alerts in Slack, Teams, or email with full context so your team can respond quickly and effectively.",
+      benefits: ["Multi-platform alerts", "Context preservation", "Response templates"],
+      color: "trupeer-green"
+    },
     {
       icon: BarChart3,
-      title: "Actionable Insights",
-      description: "Identify documentation gaps and product improvement areas from real customer queries."
+      title: "Performance Analytics",
+      description: "Track response times, engagement rates, and community health with detailed analytics and actionable insights.",
+      benefits: ["Real-time dashboards", "Trend analysis", "Custom reports"],
+      color: "trupeer-purple"
     },
     {
-      icon: Users,
-      title: "Thriving Community",
-      description: "Foster collaboration and peer-to-peer learning with increased engagement."
+      icon: Shield,
+      title: "Enterprise Security",
+      description: "SOC2 compliant with enterprise-grade security, SSO integration, and configurable access controls.",
+      benefits: ["SOC2 & ISO27001", "SSO integration", "Role-based access"],
+      color: "trupeer-blue"
     },
     {
-      icon: Lightbulb,
-      title: "Behavioral Science Core",
-      description: "Built on proven 'Nudge Theory' principles for real, sustainable engagement."
+      icon: MessageSquare,
+      title: "Multi-Platform Support",
+      description: "Monitor Reddit, Discord, community forums, support channels, and more from a single unified dashboard.",
+      benefits: ["20+ integrations", "Unified inbox", "Cross-platform sync"],
+      color: "trupeer-green"
     }
   ];
 
   return (
-    <section className="py-12 md:py-24 bg-gradient-to-br from-forumscout-purple/10 via-background to-forumscout-accent-blue/10 relative overflow-hidden">
-      {/* Background decorative elements */}
-      <div className="absolute inset-0 bg-grid-pattern opacity-5"></div>
-      <div className="absolute top-20 left-10 w-72 h-72 bg-forumscout-purple/10 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-20 right-10 w-96 h-96 bg-forumscout-accent-blue/10 rounded-full blur-3xl"></div>
-      
-      <div className="container px-4 md:px-6 mx-auto relative">
-        {/* Hero-style header */}
-        <div className="text-center max-w-4xl mx-auto mb-12 md:mb-20">
-          <div className="inline-flex items-center gap-2 px-4 py-2 md:px-6 md:py-3 rounded-full bg-gradient-to-r from-forumscout-purple/20 to-forumscout-accent-blue/20 border border-forumscout-purple/30 mb-4 md:mb-6">
-            <Sparkles className="h-4 w-4 md:h-5 md:w-5 text-forumscout-purple" />
-            <span className="text-forumscout-purple font-semibold text-sm md:text-lg">The Solution</span>
-            <Sparkles className="h-4 w-4 md:h-5 md:w-5 text-forumscout-purple" />
+    <section className="py-16 md:py-24 bg-gradient-to-b from-trupeer-gray-50/50 to-white">
+      <div className="container px-4 md:px-6 mx-auto">
+        
+        {/* Section Header */}
+        <div className="text-center max-w-4xl mx-auto mb-16 space-y-6">
+          <div className="inline-flex items-center gap-2 rounded-full bg-trupeer-purple-100 border border-trupeer-purple-200 px-4 py-2 text-sm font-medium text-trupeer-purple-800">
+            <CheckCircle className="h-4 w-4 fill-current" />
+            AI Features that make you a Pro
           </div>
           
-          <h2 className="text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-bold tracking-tight mb-4 md:mb-8 leading-tight">
-            <span className="bg-gradient-to-r from-forumscout-purple via-forumscout-accent-blue to-forumscout-accent-green text-transparent bg-clip-text">
-              From Manual Nudges
-            </span>
-            <br />
-            <span className="text-foreground">to Automated Brilliance</span>
+          <h2 className="text-3xl md:text-5xl font-bold text-gray-900 tracking-tight leading-tight">
+            Powerful features that <span className="bg-gradient-to-r from-trupeer-purple-600 to-trupeer-blue-600 bg-clip-text text-transparent">work seamlessly</span>
           </h2>
           
-          <p className="text-base md:text-xl lg:text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto px-2">
-            Forum Scout bridges the gap between your busy internal teams and your customers' needs. 
-            <br className="hidden md:block" />
-            <span className="text-forumscout-purple font-semibold"> Born from real-world challenges</span> and proven successes.
+          <p className="text-xl text-trupeer-gray-600 leading-relaxed">
+            Everything you need to transform your community engagement, without breaking a sweat
           </p>
         </div>
 
-        {/* Primary Features - Large Cards */}
-        <div className="grid gap-8 md:gap-12 lg:gap-16 mb-12 md:mb-20">
-          {primaryFeatures.map((feature, index) => (
-            <div key={index} className={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-8 md:gap-12 lg:gap-16`}>
+        {/* Features Grid */}
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+          {features.map((feature, index) => (
+            <div 
+              key={index}
+              className="group bg-white rounded-2xl p-8 border border-trupeer-gray-200 shadow-sm hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
+            >
+              {/* Icon */}
+              <div className={`w-16 h-16 rounded-xl bg-gradient-to-br from-${feature.color}-500 to-${feature.color}-600 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                <feature.icon className="h-8 w-8 text-white" />
+              </div>
+              
               {/* Content */}
-              <div className="flex-1 space-y-4 md:space-y-6 text-center lg:text-left">
-                <div className={`inline-flex items-center justify-center w-16 h-16 md:w-20 md:h-20 rounded-2xl md:rounded-3xl bg-gradient-to-br ${feature.color} shadow-2xl`}>
-                  <feature.icon className="h-8 w-8 md:h-10 md:w-10 text-white" />
-                </div>
-                
-                <h3 className="text-2xl md:text-4xl font-bold text-foreground leading-tight">
+              <div className="space-y-4">
+                <h3 className="text-xl font-bold text-gray-900 group-hover:text-trupeer-purple-600 transition-colors">
                   {feature.title}
                 </h3>
                 
-                <p className="text-base md:text-xl text-muted-foreground leading-relaxed">
+                <p className="text-trupeer-gray-600 leading-relaxed">
                   {feature.description}
                 </p>
                 
-                <div className="flex items-center justify-center lg:justify-start gap-2 text-forumscout-purple font-semibold text-base md:text-lg group cursor-pointer">
-                  <span>Learn more</span>
-                  <ArrowRight className="h-4 w-4 md:h-5 md:w-5 group-hover:translate-x-1 transition-transform" />
-                </div>
+                {/* Benefits list */}
+                <ul className="space-y-2">
+                  {feature.benefits.map((benefit, benefitIndex) => (
+                    <li key={benefitIndex} className="flex items-center gap-2 text-sm text-trupeer-gray-600">
+                      <CheckCircle className="h-4 w-4 text-trupeer-green-500 flex-shrink-0" />
+                      <span>{benefit}</span>
+                    </li>
+                  ))}
+                </ul>
               </div>
               
-              {/* Visual Element */}
-              <div className="flex-1 relative w-full">
-                <div className={`w-full h-48 md:h-80 rounded-2xl md:rounded-3xl bg-gradient-to-br ${feature.color} opacity-20 relative overflow-hidden`}>
-                  <div className="absolute inset-0 bg-gradient-to-tr from-white/10 to-transparent"></div>
-                  <div className="absolute bottom-4 right-4 w-16 h-16 md:w-32 md:h-32 bg-white/10 rounded-full"></div>
-                  <div className="absolute top-4 left-4 md:top-8 md:left-8 w-12 h-12 md:w-20 md:h-20 bg-white/10 rounded-full"></div>
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <feature.icon className={`h-16 w-16 md:h-24 md:w-24 text-white/30`} />
-                  </div>
-                </div>
+              {/* Hover effect arrow */}
+              <div className="flex items-center gap-2 text-trupeer-purple-600 font-medium mt-6 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <span className="text-sm">Learn more</span>
+                <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
               </div>
             </div>
           ))}
         </div>
 
-        {/* Secondary Features - Horizontal List */}
-        {!isMobile && (
-          <div className="bg-card/50 backdrop-blur-sm border border-forumscout-purple/20 rounded-2xl md:rounded-3xl p-6 md:p-8 lg:p-12">
-            <h3 className="text-xl md:text-3xl font-bold text-center mb-8 md:mb-12 text-foreground leading-tight">
-              Plus These Powerful Capabilities
+        {/* Bottom CTA */}
+        <div className="text-center mt-16 pt-12 border-t border-trupeer-gray-200">
+          <div className="max-w-2xl mx-auto space-y-6">
+            <h3 className="text-2xl md:text-3xl font-bold text-gray-900">
+              Ready to experience these features yourself?
             </h3>
-            
-            <div className="grid gap-6 md:grid-cols-3 md:gap-8">
-              {secondaryFeatures.map((feature, index) => (
-                <div key={index} className="text-center group">
-                  <div className="inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-xl md:rounded-2xl bg-gradient-to-br from-forumscout-purple/20 to-forumscout-accent-blue/20 mb-4 md:mb-6 group-hover:scale-110 transition-transform duration-300">
-                    <feature.icon className="h-6 w-6 md:h-8 md:w-8 text-forumscout-purple" />
-                  </div>
-                  
-                  <h4 className="text-lg md:text-xl font-semibold mb-2 md:mb-3 text-foreground leading-tight">
-                    {feature.title}
-                  </h4>
-                  
-                  <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
-                    {feature.description}
-                  </p>
-                </div>
-              ))}
+            <p className="text-trupeer-gray-600">
+              Join thousands of teams already using Forum Scout to revolutionize their community engagement
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button
+                size="lg"
+                className="bg-gradient-to-r from-trupeer-purple-600 to-trupeer-blue-600 hover:from-trupeer-purple-700 hover:to-trupeer-blue-700 text-white font-semibold px-8 py-4"
+              >
+                Start free trial
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+              <Button 
+                size="lg" 
+                variant="outline"
+                className="border-2 border-trupeer-gray-300 text-trupeer-gray-700 hover:bg-trupeer-gray-50 font-semibold px-8 py-4"
+              >
+                View all features
+              </Button>
             </div>
           </div>
-        )}
+        </div>
       </div>
     </section>
   );

@@ -39,7 +39,7 @@ export const MarketingNavbar = () => {
         <div className="flex h-14 md:h-16 items-center justify-between">
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-2">
-              <span className="text-xl md:text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 inline-block text-transparent bg-clip-text">
+              <span className="text-xl md:text-2xl font-bold bg-gradient-to-r from-forumscout-primary-600 to-forumscout-secondary-600 inline-block text-transparent bg-clip-text">
                 ForumScout
               </span>
             </Link>
@@ -91,7 +91,7 @@ export const MarketingNavbar = () => {
           <div className="hidden md:flex items-center space-x-4">
             <ThemeToggle />
             <Button 
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 min-h-[40px]"
+              className="bg-gradient-to-r from-forumscout-primary-600 to-forumscout-secondary-600 hover:from-forumscout-primary-700 hover:to-forumscout-secondary-700 min-h-[40px]"
               onClick={() => openLeadForm('navbar-free-trial-desktop')}
             >
               Start Free Trial
@@ -160,7 +160,7 @@ export const MarketingNavbar = () => {
             <div className="pt-4 pb-3 border-t border-border">
               <div className="px-4">
                 <Button 
-                  className="w-full justify-center bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 min-h-[48px] text-base"
+                  className="w-full justify-center bg-gradient-to-r from-forumscout-primary-600 to-forumscout-secondary-600 hover:from-forumscout-primary-700 hover:to-forumscout-secondary-700 min-h-[48px] text-base"
                   onClick={() => openLeadForm('navbar-free-trial-mobile')}
                 >
                   Start Free Trial

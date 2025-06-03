@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, MessageSquare, Users, TrendingUp } from "lucide-react";
+import { ArrowRight, Play, CheckCircle, Star, TrendingUp } from "lucide-react";
 
 interface HeroSectionProps {
   openLeadForm: (source: string) => void;
@@ -7,62 +7,111 @@ interface HeroSectionProps {
 
 export const HeroSection = ({ openLeadForm }: HeroSectionProps) => {
   return (
-    <section className="relative overflow-hidden py-12 md:py-20 lg:py-32 bg-gradient-to-b from-background to-secondary/20">
-      <div className="container px-4 md:px-6 mx-auto">
-        <div className="grid gap-6 lg:grid-cols-2 lg:gap-12 items-center">
-          <div className="flex flex-col justify-center space-y-4 animate-fade-in">
-            <div className="inline-block rounded-lg bg-muted px-3 py-1 text-sm">
-              Introducing Forum Scout
-            </div>
-            <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight lg:text-5xl xl:text-6xl bg-gradient-to-r from-primary via-forumscout-purple to-forumscout-accent-blue text-transparent bg-clip-text leading-tight">
-            Smart monitoring for your forums. Leave no question unanswered.
+    <section className="relative overflow-hidden py-16 md:py-24 lg:py-32 bg-gradient-to-br from-white via-trupeer-purple-50/30 to-trupeer-blue-50/50">
+      {/* Background decorative elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-bl from-trupeer-purple-100/20 to-transparent rounded-full blur-3xl"></div>
+        <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-trupeer-blue-100/20 to-transparent rounded-full blur-3xl"></div>
+      </div>
+
+      <div className="container relative px-4 md:px-6 mx-auto">
+        <div className="flex flex-col items-center text-center space-y-8 max-w-6xl mx-auto">
+          
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 rounded-full bg-trupeer-purple-100 border border-trupeer-purple-200 px-4 py-2 text-sm font-medium text-trupeer-purple-800 animate-fade-in">
+            <Star className="h-4 w-4 fill-current" />
+            Smart Forum Monitoring for Enterprise Teams
+          </div>
+
+          {/* Main Headlines - Trupeer style */}
+          <div className="space-y-6 animate-fade-in">
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-gray-900 leading-none">
+              <span className="block">Monitor forums</span>
+              <span className="block bg-gradient-to-r from-trupeer-purple-600 via-trupeer-blue-600 to-trupeer-purple-600 bg-clip-text text-transparent bg-300% animate-gradient-shift">
+                effortlessly
+              </span>
             </h1>
-            <p className="text-muted-foreground text-base md:text-xl max-w-[600px] leading-relaxed">
-              Forum Scout intelligently routes unanswered community questions to the right internal experts, fostering rapid responses and sky-high engagement.
+            
+            <p className="text-xl md:text-2xl text-trupeer-gray-600 max-w-4xl leading-relaxed">
+              Let AI turn your community questions into actionable insights. Route inquiries to experts and boost engagement with intelligent monitoring.
             </p>
-            <div className="flex flex-col sm:flex-row gap-3 pt-4">
-              <Button
-                size="lg"
-                className="bg-gradient-to-r from-forumscout-purple to-forumscout-purple-dark hover:opacity-90 shadow-lg min-h-[48px]"
-                onClick={() => openLeadForm("hero-cta")}
-              >
-                Request a Demo
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Button>
-              <Button 
-                size="lg" 
-                variant="outline"
-                className="min-h-[48px]"
-                asChild
-              >
-                <a href="/#how-it-works">See How It Works</a>
-              </Button>
+          </div>
+
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row gap-4 pt-4 animate-scale-in">
+            <Button
+              size="lg"
+              className="bg-gradient-to-r from-trupeer-purple-600 to-trupeer-blue-600 hover:from-trupeer-purple-700 hover:to-trupeer-blue-700 text-white font-semibold px-8 py-4 text-lg h-14 shadow-lg hover:shadow-xl transition-all duration-200"
+              onClick={() => openLeadForm("hero-cta")}
+            >
+              Start monitoring for free
+              <ArrowRight className="ml-2 h-5 w-5" />
+            </Button>
+            <Button 
+              size="lg" 
+              variant="outline"
+              className="border-2 border-trupeer-gray-300 text-trupeer-gray-700 hover:bg-trupeer-gray-50 font-semibold px-8 py-4 text-lg h-14 bg-white/50 backdrop-blur-sm"
+              asChild
+            >
+              <a href="/#demo" className="inline-flex items-center">
+                <Play className="mr-2 h-5 w-5" />
+                Watch demo
+              </a>
+            </Button>
+          </div>
+
+          {/* Trust indicators */}
+          <div className="flex flex-col sm:flex-row items-center gap-6 pt-8 text-sm text-trupeer-gray-600 animate-fade-in">
+            <div className="flex items-center gap-2">
+              <CheckCircle className="h-4 w-4 text-trupeer-green-500" />
+              <span>No credit card required</span>
+            </div>
+            <div className="hidden sm:block w-1 h-1 bg-trupeer-gray-300 rounded-full"></div>
+            <div className="flex items-center gap-2">
+              <div className="flex -space-x-1">
+                {[1,2,3,4,5].map((i) => (
+                  <Star key={i} className="h-4 w-4 text-amber-400 fill-current" />
+                ))}
+              </div>
+              <span>Rated 4.9/5 by enterprise teams</span>
+            </div>
+            <div className="hidden sm:block w-1 h-1 bg-trupeer-gray-300 rounded-full"></div>
+            <div className="flex items-center gap-2">
+              <TrendingUp className="h-4 w-4 text-trupeer-green-500" />
+              <span>Trusted by 10,000+ companies</span>
             </div>
           </div>
-          <div className="relative lg:ml-auto animate-scale-in">
-            <div className="relative rounded-xl overflow-hidden shadow-2xl">
-              <div className="bg-gradient-to-tr from-forumscout-purple-light/30 to-forumscout-navy-light/20 backdrop-blur-sm p-6 md:p-8 lg:p-12 rounded-xl border border-white/10">
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-8">
-                  <div className="flex flex-col items-center text-center p-3 md:p-4 bg-card/50 rounded-lg">
-                    <div className="bg-forumscout-accent-green/20 text-forumscout-accent-green p-2 md:p-3 rounded-full">
-                      <MessageSquare className="h-5 w-5 md:h-6 md:w-6" />
-                    </div>
-                    <div className="text-xl md:text-2xl font-bold text-forumscout-accent-green mt-2">97%</div>
-                    <div className="text-xs text-muted-foreground">Resolution Rate</div>
+
+          {/* Visual Demo Preview */}
+          <div className="pt-12 w-full max-w-5xl animate-scale-in">
+            <div className="relative rounded-2xl overflow-hidden shadow-2xl bg-white border border-trupeer-gray-200">
+              {/* Browser mockup header */}
+              <div className="bg-trupeer-gray-50 px-4 py-3 border-b border-trupeer-gray-200 flex items-center gap-2">
+                <div className="flex gap-2">
+                  <div className="w-3 h-3 bg-red-400 rounded-full"></div>
+                  <div className="w-3 h-3 bg-yellow-400 rounded-full"></div>
+                  <div className="w-3 h-3 bg-green-400 rounded-full"></div>
+                </div>
+                <div className="flex-1 text-center">
+                  <div className="bg-white rounded-md px-4 py-1 text-sm text-trupeer-gray-600 border border-trupeer-gray-200 max-w-md mx-auto">
+                    forumscout.ai/dashboard
                   </div>
-                  <div className="flex flex-col items-center text-center p-3 md:p-4 bg-card/50 rounded-lg">
-                    <div className="bg-forumscout-accent-blue/20 text-forumscout-accent-blue p-2 md:p-3 rounded-full">
-                      <Users className="h-5 w-5 md:h-6 md:w-6" />
-                    </div>
-                    <div className="text-xl md:text-2xl font-bold text-forumscout-accent-blue mt-2">4.2h</div>
-                    <div className="text-xs text-muted-foreground">Avg Response</div>
+                </div>
+              </div>
+              
+              {/* Placeholder for product screenshot */}
+              <div className="aspect-video bg-gradient-to-br from-trupeer-purple-50 to-trupeer-blue-50 flex items-center justify-center p-8">
+                <div className="text-center space-y-4">
+                  <div className="w-16 h-16 bg-gradient-to-r from-trupeer-purple-500 to-trupeer-blue-500 rounded-xl mx-auto flex items-center justify-center">
+                    <TrendingUp className="h-8 w-8 text-white" />
                   </div>
-                  <div className="flex flex-col items-center text-center p-3 md:p-4 bg-card/50 rounded-lg">
-                    <div className="bg-forumscout-accent-orange/20 text-forumscout-accent-orange p-2 md:p-3 rounded-full">
-                      <TrendingUp className="h-5 w-5 md:h-6 md:w-6" />
-                    </div>
-                    <div className="text-xl md:text-2xl font-bold text-forumscout-accent-orange mt-2">110%+</div>
-                    <div className="text-xs text-muted-foreground">Increase</div>
+                  <div className="space-y-2">
+                    <h3 className="text-xl font-semibold text-trupeer-gray-800">
+                      Product Screenshot Needed
+                    </h3>
+                    <p className="text-trupeer-gray-600 text-sm max-w-md">
+                      High-quality dashboard screenshot showing forum monitoring in action
+                    </p>
                   </div>
                 </div>
               </div>

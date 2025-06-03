@@ -1,5 +1,6 @@
 import { HeroSection } from "@/components/home/HeroSection";
-import { ProblemSection } from "@/components/home/ProblemSection";
+import { BeforeAfterSection } from "@/components/home/BeforeAfterSection";
+import { HowItWorksSection } from "@/components/home/HowItWorksSection";
 import { FeaturesSection } from "@/components/home/FeaturesSection";
 import { QuickDemoSection } from "@/components/home/QuickDemoSection";
 import { ResultsSection } from "@/components/home/ResultsSection";
@@ -17,24 +18,47 @@ export default function Home() {
   
   return (
     <>
+      {/* Hero Section - Trupeer style */}
       <HeroSection openLeadForm={openLeadForm} />
-      <ProblemSection />
+      
+      {/* Before/After Comparison - Trupeer signature */}
+      <BeforeAfterSection openLeadForm={openLeadForm} />
+      
+      {/* How It Works - Trupeer 1,2,3 process */}
+      <section id="how-it-works">
+        <HowItWorksSection openLeadForm={openLeadForm} />
+      </section>
+      
+      {/* Features showcase */}
       <section id="features">
         <FeaturesSection isMobile={isMobile} />
       </section>
+      
+      {/* Demo section */}
       <section id="demo">
         <QuickDemoSection openLeadForm={openLeadForm} />
       </section>
+      
+      {/* Results/Social proof */}
       <ResultsSection isMobile={isMobile} openLeadForm={openLeadForm} />
+      
+      {/* Pricing */}
       <section id="pricing">
         <PricingSection openLeadForm={openLeadForm} />
       </section>
-      {/* Hide Implementation Timeline on mobile - too detailed for mobile attention spans */}
-      {!isMobile && <ImplementationTimelineSection />}
+      
+      {/* Implementation Timeline - Hide on mobile */}
+      {!isMobile && <ImplementationTimelineSection openLeadForm={openLeadForm} />}
+      
+      {/* FAQ */}
       <section id="faq">
         <FAQSection isMobile={isMobile} />
       </section>
+      
+      {/* Final CTA */}
       <CtaSection openLeadForm={openLeadForm} />
+      
+      {/* Lead capture modal */}
       <LeadCaptureForm 
         isOpen={isLeadFormOpen}
         setIsOpen={setIsLeadFormOpen}
