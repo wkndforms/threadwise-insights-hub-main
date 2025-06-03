@@ -55,20 +55,20 @@ export const FAQSection = ({ isMobile = false }: FAQSectionProps) => {
     : faqs; // Show all FAQs on desktop
 
   return (
-    <section id="faq" className="py-12 md:py-24 bg-gradient-to-br from-slate-50/30 via-background to-slate-50/20 relative overflow-hidden">
+    <section id="faq" className="py-12 md:py-24 bg-gradient-to-br from-forumscout-neutral-50 via-background to-forumscout-neutral-50 relative overflow-hidden">
       {/* Background elements */}
-      <div className="absolute top-20 right-10 w-64 h-64 bg-slate-500/5 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-20 left-10 w-80 h-80 bg-slate-600/5 rounded-full blur-3xl"></div>
+      <div className="absolute top-20 right-10 w-64 h-64 bg-forumscout-neutral-500/5 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-20 left-10 w-80 h-80 bg-forumscout-neutral-600/5 rounded-full blur-3xl"></div>
       
       <div className="container px-4 md:px-6 mx-auto relative">
         <div className="text-center max-w-4xl mx-auto mb-8 md:mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 md:px-6 md:py-3 rounded-full bg-slate-100/80 border border-slate-200/50 mb-4 md:mb-6">
-            <HelpCircle className="h-4 w-4 md:h-5 md:w-5 text-slate-600" />
-            <span className="text-slate-700 font-semibold text-sm md:text-lg">Common Concerns</span>
+          <div className="inline-flex items-center gap-2 px-4 py-2 md:px-6 md:py-3 rounded-full bg-forumscout-neutral-100 border border-forumscout-neutral-200 mb-4 md:mb-6">
+            <HelpCircle className="h-4 w-4 md:h-5 md:w-5 text-forumscout-neutral-600" />
+            <span className="text-forumscout-neutral-700 font-semibold text-sm md:text-lg">Common Concerns</span>
           </div>
           
           <h2 className="text-2xl md:text-4xl lg:text-5xl xl:text-6xl font-bold tracking-tight mb-4 md:mb-6 leading-tight">
-            <span className="bg-gradient-to-r from-slate-600 via-slate-800 to-slate-600 text-transparent bg-clip-text">
+            <span className="bg-gradient-to-r from-forumscout-neutral-600 via-forumscout-neutral-800 to-forumscout-neutral-600 text-transparent bg-clip-text">
               Questions & Concerns
             </span>
             <br />
@@ -86,7 +86,7 @@ export const FAQSection = ({ isMobile = false }: FAQSectionProps) => {
               <AccordionItem 
                 key={index} 
                 value={`item-${index}`}
-                className="bg-card border border-slate-200/50 rounded-xl md:rounded-2xl px-4 py-1 md:px-6 md:py-2 hover:shadow-lg transition-all duration-300"
+                className="bg-card border border-forumscout-neutral-200 rounded-xl md:rounded-2xl px-4 py-1 md:px-6 md:py-2 hover:shadow-lg transition-all duration-300"
               >
                 <AccordionTrigger className="text-left text-base md:text-lg font-semibold hover:no-underline py-4 md:py-6 leading-tight">
                   {faq.question}
@@ -100,7 +100,7 @@ export const FAQSection = ({ isMobile = false }: FAQSectionProps) => {
           
           {/* Mobile indicator for more FAQs */}
           {isMobile && (
-            <div className="text-center mt-6 p-4 bg-slate-50/50 border border-slate-200/50 rounded-xl">
+            <div className="text-center mt-6 p-4 bg-forumscout-neutral-50 border border-forumscout-neutral-200 rounded-xl">
               <p className="text-sm text-muted-foreground">
                 <span className="font-semibold">+{faqs.length - displayedFaqs.length} more questions</span> answered on desktop
               </p>
@@ -110,7 +110,7 @@ export const FAQSection = ({ isMobile = false }: FAQSectionProps) => {
 
         {/* Still have questions CTA */}
         <div className="text-center mt-8 md:mt-16">
-          <div className="bg-gradient-to-r from-slate-100/50 to-slate-200/30 border border-slate-200/50 rounded-xl md:rounded-2xl p-6 md:p-8 max-w-2xl mx-auto">
+          <div className="bg-gradient-to-r from-forumscout-neutral-100 to-forumscout-neutral-200 border border-forumscout-neutral-200 rounded-xl md:rounded-2xl p-6 md:p-8 max-w-2xl mx-auto">
             <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4 text-foreground leading-tight">
               Still have questions?
             </h3>
@@ -118,10 +118,10 @@ export const FAQSection = ({ isMobile = false }: FAQSectionProps) => {
               Our team is here to help. Get personalized answers to your specific situation.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
-              <button className="bg-gradient-to-r from-slate-600 to-slate-700 text-white px-6 py-3 rounded-full font-semibold hover:shadow-lg transition-all duration-300 hover:scale-105 min-h-[48px] text-sm md:text-base">
+              <button className="bg-gradient-to-r from-forumscout-primary-600 to-forumscout-secondary-600 text-white px-6 py-3 rounded-full font-semibold hover:shadow-lg transition-all duration-300 hover:scale-105 min-h-[48px] text-sm md:text-base">
                 Schedule a Call
               </button>
-              <button className="border border-slate-300 text-slate-700 px-6 py-3 rounded-full font-semibold hover:bg-slate-50 transition-all duration-300 min-h-[48px] text-sm md:text-base">
+              <button className="border border-forumscout-neutral-300 text-forumscout-neutral-700 px-6 py-3 rounded-full font-semibold hover:bg-forumscout-neutral-50 transition-all duration-300 min-h-[48px] text-sm md:text-base">
                 Chat with Us
               </button>
             </div>
